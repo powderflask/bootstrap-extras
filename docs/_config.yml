@@ -8,7 +8,7 @@ author: Driftwood Cove Designs
 email: powderflask@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   A collection of small, re-usable components to extend Bootstrap's functionality.
-baseurl: "/bootstrap-extras" # the subpath of your site, e.g. /blog
+baseurl: "/bootstrap-extras"  # project name for github pages
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  powderflask
 
