@@ -1,0 +1,62 @@
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+title: Bootstrap Extras
+author: Driftwood Cove Designs
+email: powderflask@gmail.com
+description: >- # this means to ignore newlines until "baseurl:"
+  A collection of small, re-usable components to extend Bootstrap's functionality.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+github_username:  powderflask
+
+# Build settings
+markdown:       kramdown
+highlighter:    rouge
+
+kramdown:
+  auto_ids:     true
+
+# Permalinks
+permalink:      pretty
+
+theme: minima
+plugins:
+  - jekyll-redirect-from
+  - jekyll-sitemap
+  - jekyll-toc
+
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+# exclude:
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
+
+# Custom variables
+current_version:      0.1
+repo:                 "https://github.com/powderflask/bootstrap-extras"
+
+download:
+  source:           "https://github.com/powderflask/bootstrap-extras/archive/master.zip"
+  dist:             "https://github.com/powderflask/bootstrap-extras/releases/download/v0.1/bootstrap_extras-0.1-dist.zip"
+
+cdn:
+  # See https://www.srihash.org for info on how to generate the hashes
+  bootstrap_css:      "//stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+  bootstrap_css_hash: "sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+  bootstrap_js:       "//stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+  bootstrap_js_hash:  "sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+  jquery:             "//code.jquery.com/jquery-3.3.1.slim.min.js"
+  jquery_hash:        "sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+
+toc:
+  min_level: 2
+  max_level: 4

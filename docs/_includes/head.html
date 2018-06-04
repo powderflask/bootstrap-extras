@@ -1,0 +1,28 @@
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="{{ site.authors }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="{{ page.description | default: site.description | smartify }}">
+    <meta name="generator" content="Jekyll v{{ jekyll.version }}">
+
+    <title>
+      {%- if page.title -%}
+        {{ page.title | smartify }} · {{ site.title | smartify }}
+      {%- else -%}
+        {{ site.title | smartify }} · {{ site.description | smartify }}
+      {%- endif -%}
+    </title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ site.cdn.bootstrap_css }}" rel="stylesheet" integrity="{{ site.cdn.bootstrap_css_hash}}" crossorigin="anonymous">
+
+    <!-- Theme -->
+    <link href="{{ '/assets/main.css' | relative_url }}" rel="stylesheet">
+    <link href="{{ '/assets/bse-docs.css' | relative_url }}" rel="stylesheet">
+
+    <!-- Bootstrap Extras -->
+    <link href="{{ '/assets/bse.min.css' | relative_url }}" rel="stylesheet" >
+
+</head>
+

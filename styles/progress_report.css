@@ -1,0 +1,60 @@
+.progress-report {
+    position: relative;
+}
+.progress-report .progress {
+    cursor: pointer;
+}
+.progress-report .progress-form {
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.progress-report .progress-form .spinner {
+    position: absolute;
+    top: 0;
+    left: 50%;
+}
+.progress-report .progress-form {
+    display: none;
+}
+
+/* Range Input Styling:  https://www.htmllion.com/html5-range-input-with-css.html */
+input[type='range']::-webkit-slider-thumb {
+    height: 22px;
+    width: 4px;
+    vertical-align:middle;
+    border: 1px solid;
+    cursor: pointer;
+    margin-top: -6px;
+}
+input[type='range']::-webkit-slider-runnable-track {
+    background-color: transparent;
+}
+input[type='range']::-moz-range-thumb {
+    height: 22px;
+    width: 4px;
+    vertical-align:middle;
+    border: 1px solid;
+    cursor: pointer;
+    margin-top: -6px;
+}
+input[type='range']::-moz-range-track{
+    background-color: transparent;
+}
+input[type='range']::-moz-range-thumb:hover {
+    background: #fdd921;
+}
+input[type='range']:active::-moz-range-thumb {
+    background: #fdd921;
+}
+input[type=range]::-ms-thumb {
+    height: 22px;
+    width: 4px;
+    vertical-align:middle;
+    border: 1px solid;
+    cursor: pointer;
+    margin-top: -2px;
+}
+input[type=range]::-ms-track {
+    background-color: transparent;
+}

@@ -1,0 +1,37 @@
+{
+  "name": "bootstrap-extras",
+  "version": "0.1.0",
+  "description": "A collection of small, re-usable components to extend Bootstrap's functionality.",
+  "author": "Driftwood Cove Designs <powderflask@gmail.com>",
+  "license": "MIT",
+  "main": "dist/bse.js",
+  "devDependencies": {
+    "browserify": "^16.2.2",
+    "clean-css-cli": "^4.1.11",
+    "jshint": "^2.5.10",
+    "minifyify": "^6.0.0",
+    "nodemon": "^1.17.1",
+    "npm-run-all": "^4.1.2",
+    "opener": "^1.4.0",
+    "rimraf": "^2.2.8",
+    "wait-on": "^2.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/powderflask/bootstrap-extras.git"
+  },
+  "scripts": {
+    "clean": "rimraf dist/*",
+    "prebuild": "npm run clean -s",
+    "build": "npm run build:scripts -s && npm run build:styles -s && npm run build:docs -s",
+    "build:scripts": "browserify -d scripts/main.js -p [minifyify --compressPath . --map main.js.map --output dist/bse.min.js.map] > dist/bse.min.js",
+    "build:styles": "cleancss -o dist/bse.min.css styles/*.css",
+    "build:docs": "cp dist/* docs/assets/ && cd docs; jekyll build",
+    "watch": "npm-run-all --parallel \"watch:* -s\"",
+    "watch:build": "nodemon -q -w assets/ --ext \".\" --exec \"npm run build\"",
+    "open:docs": "opener http://example.com",
+    "open:dev": "wait-on http://localhost:4000 && opener http://localhost:4000",
+    "serve:dev": "cd docs; bundle exec jekyll serve",
+    "dev": "npm-run-all \"watch -s\" \"serve:dev -s\" \"open:dev -s\""
+  }
+}

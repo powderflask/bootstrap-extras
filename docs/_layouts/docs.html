@@ -1,0 +1,18 @@
+---
+layout: page
+---
+  <p class="bd-lead">{{ page.description | smartify }}</p>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">Example</h4>
+    </div>
+    <div class="panel-body">
+      {% capture example %}
+        {{ content }}
+      {% endcapture %}
+      {% include example.html content=example %}
+    </div>
+  </div>
+
+  {% include scripts.html %}
+

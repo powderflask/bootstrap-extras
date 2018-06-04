@@ -1,0 +1,5 @@
+/* Bootstrap Extras custom CSS to override or enhance Jekyl theme */
+
+.wrapper {
+    max-width: 80%;
+}

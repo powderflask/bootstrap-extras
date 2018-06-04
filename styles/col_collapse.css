@@ -1,0 +1,33 @@
+
+.cc-col-collapse .cc-control {
+  cursor: pointer;
+}
+.cc-col-collapse .cc-target.cc-collapsed div {
+  display:inline-block;
+}
+.cc-col-collapse .cc-target.cc-collapsed div {
+  width: 3em;
+  height: 1.1em;
+  overflow: hidden;
+}
+.cc-col-collapse .cc-target.cc-collapsed::after {
+  content: '...';
+}
+.cc-col-collapse .cc-control.cc-collapsed::after {
+  content: '';
+}
+.cc-col-collapse .cc-control.cc-target .glyphicon {
+   display: none;
+}
+.cc-col-collapse .cc-control.cc-target.cc-collapsed .glyphicon {
+   display: inline-block;
+}
+.glyphicon.cc-rotate-45 {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.glyphicon.cc-offset {
+    transform-origin: 16px 21px;
+}
