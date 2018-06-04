@@ -42,9 +42,5 @@ Future:
  - Sass css transpiler
 
 TO DO:
- - npm build script to copy markup folder to docs/components
- - check-in and publish to github pages
+ - add explicit credits here
  - build other components
- - re-factor hydronet to add this as a dependency
- - add npm script to hydronet to manage JS packages
- - add JS dependencies to project docs.
