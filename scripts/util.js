@@ -56,7 +56,7 @@ bseAjaxMockSuccess = function() {
         args.beforeSend();
         console.log("call ajax:", args);
         setTimeout(function() {
-            args.success({message : 'AJAX call made successfully'});
+            args.success({message : 'Mock AJAX call (success).'});
         }, 3000);
         setTimeout(function() {
             args.complete();
