@@ -2,9 +2,17 @@
 layout: page
 ---
   <p class="bd-lead">{{ page.description | smartify }}</p>
-  <div class="panel panel-default">
+  {% if page.credits %}
+  <blockquote>
+    Credits: {{ page.credits }}
+    {% if page.credits_url %}
+    <footer>see: <a href="{{ page.credits_url }}" target="_blank">{{ page.credits_url }}</a></footer>
+    {% endif %}
+  </blockquote>
+  {% endif %}
+  <div class="panel panel-default basic-example">
     <div class="panel-heading">
-      <h4 class="panel-title">Example</h4>
+      <h4 class="panel-title">Basic Example</h4>
     </div>
     <div class="panel-body">
       {% capture example %}

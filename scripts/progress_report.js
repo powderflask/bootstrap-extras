@@ -6,82 +6,114 @@
  *   Dependencies:  Bootstrap + JQuery + spinner
  *   MIT Open-source License (https://github.com/powderflask/bootstrap_extras/blob/master/LICENSE)
  */
+require( './spinner');
+require( './jquery-ui-widget');
+require( './jquery-ui-widget-extensions');
+require( './util' );
 
-module.exports = function() {
-    var progress_panel = $('.progress-report');
-    var progress = progress_panel.find('.progress');
-    var progress_bar = progress.find('.progress-bar');
-    var progress_form = progress_panel.find('.progress-form');
-    var spinner = $().spinner();
-    progress_form.append(spinner).hide( );
-    // var spinner = progress_form.find('.spinner');
+;(function( $, window, document, undefined ) {
 
-    var range_input = progress_form.find('.progress-input');
-    range_input.on('input', function(event) {
-        progress_bar.text(range_input.val() + "% Complete");
-        progress_bar.css( "width", range_input.val()+"%");
-    });
+    var widgetName = 'bse.progress_report',
+        widgetClass = 'bse-progress-report',
+        classes = widgetClass.buildNamesMap(['panel', 'form', 'value']),
+        selectors = widgetClass.buildNamesMap(['wrap'], '.'),
 
-    progress.on('click', function (event) {
-        event.preventDefault();
-        progress_form.show();
-        range_input.focus();
-        range_input.blur(function (event) {
-           progress_form.hide();
-        });
-    });
-    progress_form.on('change', function (event) {
-        event.preventDefault();
-        save_progress();
-        progress_form.hide();
-    });
+        markup = {
+            panel : ['<div>', {'class': classes.panel}],
+            form : ['<form>', {'class': classes.form}],
+            input : ['<input>', {type:'range', 'class': widgetClass, name:classes.value, required:''}]
+        };
 
-    function save_progress() {
-        // console.log("save_progress is working!"); // sanity check
+    $.widget( widgetName, {
 
-        var form_data = progress_form.serialize();
-        //console.log(form_data);
-        spinner.show();
-        range_input.prop('disabled', true);
+        // Options to be used as defaults
+        options: {
+            min: 0,
+            max: 100,
+            url: false,
+            type: 'POST',
 
-        console.log("Ajax Call here");
-        spinner.hide();
-        range_input.prop('disabled', false);
+            // event callbacks (ajax events added during create)
+            saveForm: null   // called when range_input is changed, before saving - return false to prevent default action
+        },
 
-/*
-        $.ajax({
-            url : progress_form.attr('action'),
-            type : "POST", // http method
-            data : form_data, // data sent with the post request
+        // Template node for the widget
+        _template : function() {
+            this.progress = this.element.clone();
+            this.progress_bar = this.progress.find('.progress-bar');
+            this.value = this.progress_bar.attr('aria-valuenow');
+            this.range_input = $.apply(this, markup.input);  // $(...markup.input)
+            this.form = $.apply(this, markup.form).append(this.range_input);
+            this.panel = $.apply(this, markup.panel).append(this.progress).append(this.form);
+            // add a spinner that also enables / disables the form control
+            this.form.spinner({
+                disable_on_spin: true,
+                'hidden': function() {this.range_input.blur()}.bind(this)
+            });
+            this.spinner = this.form.spinner('instance');
+            // configure range_input
+            this.range_input.attr('min', this.options.min).attr('max', this.options.max);
+            this.range_input.val(this.value);
 
-            // handle a successful response
-            success : function(json) {
-                // console.log("JSON RESPONSE:", json); // Sanity check
-                spinner.hide();
-                range_input.prop('disabled', false);
+            return this.panel;
+        },
 
-                if (json.message) {
-                    progress_form.before(json.message);
-                }
-            },
+        // Events handled by this widget
+        _configureEventHandlers : function() {
+            var self = this;
 
-            // handle a non-successful response
-            error : function(xhr,errmsg,err) {
-                // Undo loading UI...
-                spinner.hide();
-                range_input.prop('disabled', false);
-                progress_form.show();
-                // Add an error messge.
-                progress_form.after('<div class="alert alert-warning alert-dismissible" role="alert">' +
-                                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                                        '<span aria-hidden="true">&times;</span>' +
-                                    '</button>' +
-                                    'Oops! We encountered an error processing your request: '+ errmsg +
-                                    '<br>Refresh page and try again?' +
-                                '</div>'); // add the error to the dom
-                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            this.range_input.on('input', function(event) {
+                self.value = self.range_input.val() || 0;
+                self.progress_bar.text(self.value + '% Complete');
+                self.progress_bar.css( 'width', self.value+'%');
+                self.spinner.position( {top: '-1em', left:(self.value-1)+'%'} );
+            });
+
+            this.progress.on('click', function (event) {
+                event.preventDefault();
+                self.form.show();
+                self.range_input.focus();
+                self.range_input.blur(function (event) {
+                   self.form.hide();
+                });
+            });
+
+            this.form.on('change', function (event) {
+                event.preventDefault();
+                self._saveForm(event);
+                self.form.hide();
+            });
+        },
+
+        // Initialize widget instance (e.g. element creation, apply theming, bind events etc.)
+        _create: function () {
+            // console.log("Create ", widgetName, " instance for", this.element);
+            this._getDataOptions();
+            this._ajaxConfig();
+            this.element.after(this._template());
+            this.element.hide();
+            this._configureEventHandlers();
+        },
+
+        // Destroy plugin instance  and clean up modifications the widget has made to the DOM
+        _destroy: function () {
+            console.log("Destroy: ", this.panel);
+            this.panel.remove();
+            this.element.show();
+        },
+
+        // Progress bar was moved, potentially save this change.
+        _saveForm: function ( event ) {
+            // allow user to augment or override default save logic
+            var go = this._trigger( 'saveForm', event, { form_data: this.form.serialize(),
+                                                     progress: this.value });
+            if ( go && this.options.url ) {
+                this._ajaxSubmitForm(this.options);
             }
-        });
-        */
-    }
-};
+        }
+    });
+
+    $(selectors.wrap).progress_report();
+
+})( jQuery, window, document );
+

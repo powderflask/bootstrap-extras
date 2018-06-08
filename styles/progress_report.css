@@ -1,25 +1,23 @@
-.progress-report {
+.bse-progress-report-panel {
     position: relative;
 }
-.progress-report .progress {
+.bse-progress-report-panel .progress {
     cursor: pointer;
 }
-.progress-report .progress-form {
+.bse-progress-report-form {
     position: absolute;
     top: 0;
     width: 100%;
+    display: none;
 }
-.progress-report .progress-form .spinner {
+.bse-progress-report-form .spinner {
     position: absolute;
     top: 0;
     left: 50%;
 }
-.progress-report .progress-form {
-    display: none;
-}
 
 /* Range Input Styling:  https://www.htmllion.com/html5-range-input-with-css.html */
-input[type='range']::-webkit-slider-thumb {
+.bse-progress-report-form input[type='range']::-webkit-slider-thumb {
     height: 22px;
     width: 4px;
     vertical-align:middle;
@@ -27,10 +25,10 @@ input[type='range']::-webkit-slider-thumb {
     cursor: pointer;
     margin-top: -6px;
 }
-input[type='range']::-webkit-slider-runnable-track {
+.bse-progress-report-form input[type='range']::-webkit-slider-runnable-track {
     background-color: transparent;
 }
-input[type='range']::-moz-range-thumb {
+.bse-progress-report-form input[type='range']::-moz-range-thumb {
     height: 22px;
     width: 4px;
     vertical-align:middle;
@@ -38,16 +36,16 @@ input[type='range']::-moz-range-thumb {
     cursor: pointer;
     margin-top: -6px;
 }
-input[type='range']::-moz-range-track{
+.bse-progress-report-form input[type='range']::-moz-range-track{
     background-color: transparent;
 }
-input[type='range']::-moz-range-thumb:hover {
+.bse-progress-report-form input[type='range']::-moz-range-thumb:hover {
     background: #fdd921;
 }
-input[type='range']:active::-moz-range-thumb {
+.bse-progress-report-form input[type='range']:active::-moz-range-thumb {
     background: #fdd921;
 }
-input[type=range]::-ms-thumb {
+.bse-progress-report-form input[type=range]::-ms-thumb {
     height: 22px;
     width: 4px;
     vertical-align:middle;
@@ -55,6 +53,10 @@ input[type=range]::-ms-thumb {
     cursor: pointer;
     margin-top: -2px;
 }
-input[type=range]::-ms-track {
+.bse-progress-report-form input[type=range]::-ms-track {
     background-color: transparent;
+}
+.bse-progress-report-form .bse-spinner {
+    top: -1em;
+    left: 45%;
 }

@@ -7,7 +7,7 @@ title: Bootstrap Extras
 author: Driftwood Cove Designs
 email: powderflask@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  A collection of small, re-usable components to extend Bootstrap's functionality.
+  A collection of small, re-usable jQuery plugins to extend Bootstrap's functionality.
 baseurl: "/bootstrap-extras"  # project name for github pages
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  powderflask
@@ -24,9 +24,7 @@ permalink:      pretty
 
 theme: minima
 plugins:
-  - jekyll-redirect-from
   - jekyll-sitemap
-  - jekyll-toc
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
@@ -54,8 +52,8 @@ cdn:
   bootstrap_css_hash: "sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
   bootstrap_js:       "//stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
   bootstrap_js_hash:  "sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-  jquery:             "//code.jquery.com/jquery-3.3.1.slim.min.js"
-  jquery_hash:        "sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+  jquery:             "//code.jquery.com/jquery-3.3.1.min.js"
+  jquery_hash:        "sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 
 toc:
   min_level: 2

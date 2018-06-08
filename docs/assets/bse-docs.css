@@ -3,3 +3,16 @@
 .wrapper {
     max-width: 80%;
 }
+.home .component-menu.nav > li > a {
+    display: inline-block;
+    width: 175px;
+}
+.spinner-docs .basic-example .bse-spinner {
+    right: 50%;  /* centre spinner over button */
+}
+.column-collapse-docs .bse-col-collapse-control .glyphicon.bse-rotate-45 {
+    transform-origin: 16px 21px;
+}
+.column-collapse-docs .bse-col-collapse-controlAll .glyphicon.bse-rotate-45 {
+    transform-origin: 3px 3px;
+}

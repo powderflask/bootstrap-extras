@@ -11,7 +11,7 @@ CONTENTS:
 --------
  * toggle_this:     got 2 views of same content (e.g., value/form field)? Let user toggle between them.
  * column_collapse: got a wide table?  short on real-estate?  Allow user to collapse some of those columns down.
- * spinner:         a simple, CSS-only spinner.
+ * spinner:         a simple, CSS-only spinner (credit: http://jsfiddle.net/csswizardry/M2D4M/)
  * ajax_form_mixin: for simple, standardized AJAX interactions where form is being submitted
  * progress_report: want a user-adjustable progress bar?  This is it!  With optional Ajax interaction.
  * modal_carousel:  a bootstrap carousel in a modal pane
@@ -20,17 +20,23 @@ CONTENTS:
 INSTALLATION:
 -------------
  Download distribution.  Add it to your project.  Done.
- Dependencies:  Bootstrap 3, JQuery 2+
+ External Dependencies:  Bootstrap 3, JQuery 2+
+    -- these must be loaded in browser before bse;  Manual dependency to avoid browserify-shim nonsense.
 
 USAGE:
 ------
- See Example HTML page with each project.
+ See:  https://powderflask.github.io/bootstrap-extras/
 
 DEVELOPMENT:
 ------------
-Code is available at: https://github.com/powderflask/bootstrap_extras
+Each component is built using the jQuery UI Widget Factory:  http://jqueryui.com/widget/
+  (no other dependency or relation to jQuery UI -- just a consistent, convenient way to build plugins)
+  
+The components in this library were custom-build for a specific application.
+This project is primarily a sandbox for me to learn about modern JS development practices.
+It is not really intended as a generic library, and should be considered a work-in-progress and subject to change.
 
-Pull requests welcome.
+Fork your own: https://github.com/powderflask/bootstrap_extras
 
 TOOL CHAIN:
 ----------
@@ -38,9 +44,18 @@ TOOL CHAIN:
  - Jeckyll + Github Pages for docs
 
 Future:
- - Babel js transpiler
+ - Jest test framework (https://facebook.github.io/jest/) + Sinon fakes (http://sinonjs.org)
  - Sass css transpiler
+ - ES6 modules & syntax (see: https://www.contentful.com/blog/2017/04/04/es6-modules-support-lands-in-browsers-is-it-time-to-rethink-bundling/)
+
+BUILD:
+-----
+ > npm install; cd docs; bundle install;  
+ > npm run build;      # build dist and docs
+ > npm run serve:dev;  # serve docs on dev
+ > npm make:dev;       # build, serve, and open docs on dev
 
 TO DO:
  - add explicit credits here
- - build other components
+ - build out other components
+ - tests!!
