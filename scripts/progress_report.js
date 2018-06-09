@@ -33,7 +33,7 @@ require( './util' );
             url: false,
             type: 'POST',
 
-            // event callbacks (ajax events added during create)
+            // event callbacks (ajax event callbacks also trigger)
             saveForm: null   // called when range_input is changed, before saving - return false to prevent default action
         },
 

@@ -12,10 +12,10 @@ CONTENTS:
  * toggle_this:     got 2 views of same content (e.g., value/form field)? Let user toggle between them.
  * column_collapse: got a wide table?  short on real-estate?  Allow user to collapse some of those columns down.
  * spinner:         a simple, CSS-only spinner (credit: http://jsfiddle.net/csswizardry/M2D4M/)
- * ajax_form_mixin: for simple, standardized AJAX interactions where form is being submitted
  * progress_report: want a user-adjustable progress bar?  This is it!  With optional Ajax interaction.
  * modal_carousel:  a bootstrap carousel in a modal pane
  * slidout_tools:   a sticky toolbar with slide-out tabs
+ * Widget ajax mixin: mixin simple, standardized AJAX interactions to any widget & emit ajax events
 
 INSTALLATION:
 -------------
@@ -58,4 +58,4 @@ BUILD:
 TO DO:
  - add explicit credits here
  - build out other components
- - tests!!
+ - unit tests!!

@@ -17,12 +17,24 @@ require( './util' );
     var widgetName = 'bse.col_collapse',
         widgetClass = 'bse-col-collapse',
         classes = widgetClass.buildNamesMap(['collapsed', 'icon']),
-        selectors = widgetClass.buildNamesMap(['collapsed', 'icon', 'add', 'controlAll', 'control'], '.'),
+        selectors = widgetClass.buildNamesMap(['collapsed', 'icon', 'add', 'controlAll', 'control', 'controlLabel'], '.'),
 
         markup = {
-            expand_icon: ['<span>', {'class': classes.icon+' glyphicon glyphicon-resize-full bse-rotate-45',
-                                     'aria-hidden': 'true'}],
-            item: ['<div>', {'class': widgetClass}]
+            expand_icon: ['<span>', {'class': classes.icon, 'aria-hidden': 'true'}],
+        };
+
+        // helpers
+        expand = function(el){
+            el.removeClass(classes.collapsed);
+        };
+        collapse = function(el){
+            el.addClass(classes.collapsed);
+        };
+        toggleCollapsed = function(el) {
+            el.toggleClass(classes.collapsed);
+        };
+        isCollapsed = function(el) {
+            return el.hasClass(classes.collapsed);
         };
 
     $.widget( widgetName, {
@@ -31,6 +43,8 @@ require( './util' );
         options: {
             control_title: 'Expand/Collapse Column',
             controlAll_title: 'Expand/Collapse All',
+            controlAll_labels: {true: 'Expand All', false: 'Collapse All'},  // null or false to leave default
+            icon_class: 'glyphicon glyphicon-resize-full bse-rotate-45',
 
             // event callbacks
             collapsed: null,
@@ -39,12 +53,15 @@ require( './util' );
 
         // Configure and return the widget controls
         _configureControls : function() {
-            var expand_icon = $.apply(this, markup.expand_icon),
+            var expand_icon = $.apply(this, markup.expand_icon).addClass(this.options.icon_class),
                 col_controls = this.element.find(selectors.control),
                 global_controls = this.element.find(selectors.controlAll);
 
-            col_controls.append(expand_icon.clone()).attr('title', this.options.control_title);
-            global_controls.prepend(expand_icon.clone()).attr('title', this.options.controlAll_title);
+            col_controls.append(expand_icon.clone())
+                        .attr('title', this.options.control_title);
+            global_controls.prepend(expand_icon.clone())
+                           .attr('title', this.options.controlAll_title);
+            collapse(global_controls);  // Assume initial state for global control is Expand All?
             $.data(global_controls, 'controls', col_controls);
             return {
                 col : col_controls,
@@ -53,7 +70,6 @@ require( './util' );
         },
 
         // Configure the collapse targets for each control -- i.e., td elements in the same column
-        // Elements with the collapse-all class become a control for all collapse targets
         _configureTargets : function(col_controls) {
             var table = this.element.is('table')?this.element:this.element.find('table')[0]
             table.addClass(widgetClass);
@@ -63,8 +79,8 @@ require( './util' );
                     colNumber = control.parent("tr").children().index(control),
                     rows = table.find('> tbody > tr'),
                     targets = rows.find('td:nth-child(' + (colNumber + 1) + ')').add(control);
-                if ( control.hasClass(classes.collapsed) ) {
-                    targets.addClass(classes.collapsed);
+                if ( isCollapsed(control) ) {
+                    collapse(targets);
                 }
                 $.data(this, 'targets', targets);
             });
@@ -72,17 +88,16 @@ require( './util' );
 
         _expandTargets : function(control, event) {
             var targets = control.data('targets');
-            targets.removeClass(classes.collapsed);
+            expand(targets);
             this._trigger( 'expanded', event, { control:control, targets:targets });
         },
         _collapseTargets : function(control, event) {
             var targets = control.data('targets');
-            targets.addClass(classes.collapsed);
+            collapse(targets);
             this._trigger( 'collapsed', event, { control:control, targets:targets });
         },
         _toggleTargets : function(control, event) {
-            var expand = control.hasClass(classes.collapsed);
-            expand ? this._expandTargets(control, event) : this._collapseTargets(control, event);
+            isCollapsed(control) ? this._expandTargets(control, event) : this._collapseTargets(control, event);
         },
 
         // Events handled by this widget
@@ -92,32 +107,33 @@ require( './util' );
                 self._toggleTargets($(this), event);
             });
             this.controls.global.click( function(event) {
-                var expand = $(this).hasClass(classes.collapsed);
-                $(this).toggleClass(classes.collapsed);
-                // TODO: change button label?
-
+                var control = $(this);
+                expandAll = isCollapsed(control);
                 $.each(self.controls.col, function() {
-                    expand ? self._expandTargets($(this), event):self._collapseTargets($(this), event);
+                    expandAll ? self._expandTargets($(this), event):self._collapseTargets($(this), event);
                 });
+
+                // optionally, change control's label
+                toggleCollapsed(control);
+                if (self.options.controlAll_labels) {
+                    var label = control.find(selectors.controlLabel);
+                    label.html(self.options.controlAll_labels[isCollapsed(control)]);
+                }
             });
         },
 
         // Initialize widget instance (e.g. element creation, apply theming, bind events etc.)
         _create: function () {
-            console.log('Create ', widgetName, 'instance for', this.element);
+            // console.log('Create ', widgetName, 'instance for', this.element);
             this._getDataOptions(); // if widget recognizes data-* options in markup
             this.controls = this._configureControls();
             this._configureTargets(this.controls.col);
-
-            // Access the element on which the widget was called via this.element
-            // Access widget options via this.options
             this._configureEventHandlers();
-
         },
 
         // Destroy plugin instance  and clean up modifications the widget has made to the DOM
         _destroy: function () {
-            console.log('Destroy:', this);
+            // console.log('Destroy:', this);
             $(selectors.collapsed).removeClass(classes.collapsed);
             $(selectors.icon).remove();
             this.controls.col.attr('title', '').off('click');
