@@ -39,7 +39,6 @@ require( './util' );
 
         // Update the content area from the current form value.
         _updateContent : function() {
-            console.log("update", this.form_controls.val());
             this.content.html(this.form_controls.val());
             this.content.append(this.edit_icon);
         },
@@ -50,16 +49,14 @@ require( './util' );
             this.edit_icon = $.apply(this, markup.edit_icon)
                               .addClass(this.options.icon_class)
                               .attr('title', this.options.icon_title);
-
             this.content.append(this.edit_icon);
 
             // And the form...
             var form_id = this.element.data('form_id');
             this.form = $('#'+form_id);
             this.options.action = this.options.action || this.form.attr('action');
-            // ... move form controls to edit-this panel ...
+            // ... move form to edit-this panel ...
             this.form_controls = this.form.find( ':input' );
-            //this.form_controls.attr('form', form_id);   // retain association with original form element
             this.element.append(this.form.hide());
             // ... with a spinner for Ajax submit...
             this.form.spinner({
