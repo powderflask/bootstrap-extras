@@ -11,10 +11,18 @@ require( './util');
 
 (function( $, window, document, undefined ) {
 
-    if ('Widget' in $) {
+    const ajax_error_template =
+        '<div class="alert alert-warning alert-dismissible" role="alert">' +
+            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                '<span aria-hidden="true">&times;</span>' +
+            '</button>' +
+            'Oops! We encountered an error processing your request: {textStatus}' +
+            '<br>Refresh page and try again?' +
+        '</div>';
 
+    var WidgetExtensionsMixin = {
         // Load any data- attribute options from the element's tag
-        $.Widget.prototype._getDataOptions = function() {
+        _getDataOptions : function() {
             var data_opts = this.element.data();
             opts = this.options;
             Object.keys(data_opts).forEach(function(key) {
@@ -22,37 +30,29 @@ require( './util');
                     opts[key] = data_opts[key];
                 }
             });
-        };
+        },
 
-        /*
+       /*
          * Standardized jQuery.ajax calls with default behaviours + triggers for BSE widgets
          *   E.g., this.ajax_submit_form({ optional_ajax_settings_or_overrides })
          *   Adds an optional callback and trigger for each local Ajax Event.
          */
-        const ajax_error_template =
-            '<div class="alert alert-warning alert-dismissible" role="alert">' +
-                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                    '<span aria-hidden="true">&times;</span>' +
-                '</button>' +
-                'Oops! We encountered an error processing your request: {textStatus}' +
-                '<br>Refresh page and try again?' +
-            '</div>';
-
-        // Events triggered by ajax calls, used to extend widget options
-        const ajax_event_options= {
-            ajax_beforeSend: null,
-            ajax_success: null,
-            ajax_error: null,
-            ajax_complete: null
-        };
 
         // Add ajax trigger events to this widget's options
-        $.Widget.prototype._ajaxConfig = function() {
+        _ajaxConfig : function() {
+             // Events triggered by ajax calls, used to extend widget options
+            const ajax_event_options= {
+                ajax_beforeSend: null,
+                ajax_success: null,
+                ajax_error: null,
+                ajax_complete: null
+            };
             $.extend(this.options, ajax_event_options);
-        };
+        },
+
 
         // Submit this.form by ajax, with an optional this.spinner to display while loading
-        $.Widget.prototype._ajaxSubmitForm = function(settings) {
+        _ajaxSubmitForm : function(settings) {
             console.assert(this.form, "BSE ajax_submit_form Error: this.form must be set on widget.");
             var form_data = this.form.serialize() || "",
                 extra_data = settings.data || "",
@@ -93,6 +93,10 @@ require( './util');
 
             $.ajax(args);
 
-        };
+        }
+    };
+
+    if ('Widget' in $) {
+        Object.assign($.Widget.prototype, WidgetExtensionsMixin);
     }
 })(jQuery, window, document);

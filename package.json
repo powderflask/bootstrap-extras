@@ -27,8 +27,9 @@
   "scripts": {
     "clean": "rimraf dist/* && rimraf docs/components/_markup/*.html",
     "prebuild": "npm run clean -s",
+    "build-prod": "npm run build-prod:scripts -s && npm run build:styles -s && npm run build:docs -s",
+    "build-prod:scripts": "browserify -d scripts/main.js -x bootstrap -x jquery -p [minifyify --compressPath . --map main.js.map --output dist/bse.min.js.map] > dist/bse.min.js",
     "build": "npm run build:scripts -s && npm run build:styles -s && npm run build:docs -s",
-    "prod-build:scripts": "browserify -d scripts/main.js -x bootstrap -x jquery -p [minifyify --compressPath . --map main.js.map --output dist/bse.min.js.map] > dist/bse.min.js",
     "build:scripts": "browserify -d scripts/main.js -x bootstrap -x jquery > dist/bse.min.js",
     "build:styles": "cleancss -o dist/bse.min.css styles/*.css",
     "build:docs": "cp dist/* docs/assets/ && cp markup/* docs/components/_markup/ && cd docs; jekyll build",
