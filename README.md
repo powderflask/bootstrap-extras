@@ -9,6 +9,7 @@ A collection of small, re-usable front-end components to extend Bootstrap functi
 
 CONTENTS:
 --------
+ * ajax_save:       Submit a form via Ajax.
  * edit_this:       a display value that reveals a form when clicked, optional Ajax save on form change.
  * toggle_that:     got 2 views of same content (e.g., value/form field)? Let user toggle between them.
  * column_collapse: got a wide table?  short on real-estate?  Allow user to collapse some of those columns down.

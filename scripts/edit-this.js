@@ -113,7 +113,7 @@ require( './util' );
             // TO DO: put form back from whence it came?
         },
 
-        // Progress bar was moved, potentially save this change.
+        // Form was modified, potentially save this change.
         _saveForm: function ( event ) {
             // allow user to augment or override default save logic
             var go = this._trigger( 'saveForm', event, { form_data: this.form.serialize() });

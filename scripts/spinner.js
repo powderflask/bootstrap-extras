@@ -38,6 +38,17 @@ require( './jquery-ui-widget-extensions');
             return $.apply(this, markup.spinner).hide().html(this.options.spin_text);
         },
 
+        _getDisableTargets : function() {
+            if (!this.options.disable_on_spin)
+                return $();
+
+            var form = this.element.closest('form');
+            if (form.length > 0)  // Disable all form inputs if spinner element is in a form
+                return form.find(':input');
+            else                  // or all inputs contained in the spinner element otherwise.
+                return this.element.extend( this.element.find(':input') );
+        },
+
         // Initialize widget instance (e.g. element creation, apply theming, bind events etc.)
         _create: function () {
             // console.log('Appending', widgetName, 'instance to', this.element, ':');
@@ -46,7 +57,7 @@ require( './jquery-ui-widget-extensions');
             // console.log(this.spinner);
             this.element.append(this.spinner);
             this.original_title = this.element.attr('title') || "";
-            this.targets = this.options.disable_on_spin?this.element.find(':input'):$();
+            this.targets = this._getDisableTargets();
         },
 
         // Destroy plugin instance  and clean up modifications the widget has made to the DOM
