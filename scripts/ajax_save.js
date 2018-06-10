@@ -21,12 +21,11 @@ require( './util' );
 
         // Options to be used as defaults
         options: {
-            submit_selector: ':submit',
             action: false,
             method: 'POST',
 
             // event callbacks (ajax event callbacks also trigger)
-            saveForm: null,   // called when range_input is changed, before saving - return false to prevent default action
+            saveForm: null   // called when range_input is changed, before saving - return false to prevent default action
         },
 
         // Configure the widget controls (edit icon and form elements)
@@ -69,7 +68,7 @@ require( './util' );
             if ( go && this.options.action ) {
                 this._ajaxSubmitForm(this.options);
             }
-        },
+        }
     });
 
     $(selectors[widgetClass]).ajax_save();

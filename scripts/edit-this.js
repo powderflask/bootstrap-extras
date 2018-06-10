@@ -54,16 +54,11 @@ require( './util' );
             // And the form...
             var form_id = this.element.data('form_id');
             this.form = $('#'+form_id);
-            this.options.action = this.options.action || this.form.attr('action');
+            this.form.ajax_save(this.options);  // set up to optionally save form via Ajax
+
             // ... move form to edit-this panel ...
             this.form_controls = this.form.find( ':input' );
             this.element.append(this.form.hide());
-            // ... with a spinner for Ajax submit...
-            this.form.spinner({
-                disable_on_spin: true,
-                'hidden': function() {this.hideForm()}.bind(this)
-            });
-            this.spinner = this.form.spinner('instance');
         },
 
         // is the target element part of the widget element?
@@ -73,7 +68,8 @@ require( './util' );
 
         // Events handled by this widget
         _configureEventHandlers : function() {
-            var self = this;
+            var self = this,
+                spinner = self.form.spinner('instance');  // ouch - tight coupling to ajax-save here.
 
             this.content.on('click', function (event) {
                 event.preventDefault();
@@ -90,9 +86,13 @@ require( './util' );
             this.form.on('change', function (event) {
                 event.preventDefault();
                 self._updateContent();
-                self._saveForm(event);
+                self.form.submit();
                 self.hideForm(event);
             });
+
+            spinner.option('hidden', function() {
+                this.hideForm()}.bind(this)
+            );
         },
 
         // Initialize widget instance (e.g. element creation, apply theming, bind events etc.)
@@ -111,15 +111,6 @@ require( './util' );
             this.hideForm();
             this.content.off('click');
             // TO DO: put form back from whence it came?
-        },
-
-        // Form was modified, potentially save this change.
-        _saveForm: function ( event ) {
-            // allow user to augment or override default save logic
-            var go = this._trigger( 'saveForm', event, { form_data: this.form.serialize() });
-            if ( go && this.options.action ) {
-                this._ajaxSubmitForm(this.options);
-            }
         },
 
         // Public methods

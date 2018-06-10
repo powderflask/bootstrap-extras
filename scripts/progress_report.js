@@ -44,14 +44,8 @@ require( './util' );
             this.value = this.progress_bar.attr('aria-valuenow');
             this.range_input = $.apply(this, markup.input);  // $(...markup.input)
             this.form = $.apply(this, markup.form).append(this.range_input);
+            this.form.ajax_save(this.options);  // set up to optionally save form via Ajax
             this.panel = $.apply(this, markup.panel).append(this.progress).append(this.form);
-            // add a spinner that also enables / disables the form control
-            this.form.spinner({
-                disable_on_spin: true,
-                'hidden': function() {this.range_input.blur()}.bind(this)
-            });
-            this.spinner = this.form.spinner('instance');
-            // configure range_input
             this.range_input.attr('min', this.options.min).attr('max', this.options.max);
             this.range_input.val(this.value);
 
@@ -60,14 +54,19 @@ require( './util' );
 
         // Events handled by this widget
         _configureEventHandlers : function() {
-            var self = this;
+            var self = this,
+                spinner = self.form.spinner('instance');  // ouch - tight coupling to ajax-save here.
 
             this.range_input.on('input', function(event) {
                 self.value = self.range_input.val() || 0;
                 self.progress_bar.text(self.value + '% Complete');
                 self.progress_bar.css( 'width', self.value+'%');
-                self.spinner.position( {top: '-1em', left:(self.value-1)+'%'} );
+                spinner.position( {top: '-1em', left:(self.value-1)+'%'} );
             });
+
+            spinner.option('hidden', function() {
+                this.range_input.blur()}.bind(this)
+            );
 
             this.progress.on('click', function (event) {
                 event.preventDefault();
@@ -80,7 +79,7 @@ require( './util' );
 
             this.form.on('change', function (event) {
                 event.preventDefault();
-                self._saveForm(event);
+                self.form.submit();
                 self.form.hide();
             });
         },
@@ -100,16 +99,6 @@ require( './util' );
             console.log("Destroy: ", this.panel);
             this.panel.remove();
             this.element.show();
-        },
-
-        // Progress bar was moved, potentially save this change.
-        _saveForm: function ( event ) {
-            // allow user to augment or override default save logic
-            var go = this._trigger( 'saveForm', event, { form_data: this.form.serialize(),
-                                                     progress: this.value });
-            if ( go && this.options.action ) {
-                this._ajaxSubmitForm(this.options);
-            }
         }
     });
 
