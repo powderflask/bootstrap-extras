@@ -26,7 +26,7 @@ require( './jquery-ui-widget-extensions');
         // Options to be used as defaults
         options: {
             spin_text: 'Saving...',  // title and accessibility text for spinner
-            disable_on_spin: false,  // set to true to disable the parent element when spinner shows
+            disable_on_spin: false,  // set to true to disable all :inputs in the parent element when spinner shows
 
             // event callbacks
             hidden: null,   // triggers when spinner is hidden
@@ -46,6 +46,7 @@ require( './jquery-ui-widget-extensions');
             // console.log(this.spinner);
             this.element.append(this.spinner);
             this.original_title = this.element.attr('title') || "";
+            this.targets = this.options.disable_on_spin?this.element.find(':input'):$();
         },
 
         // Destroy plugin instance  and clean up modifications the widget has made to the DOM
@@ -62,16 +63,14 @@ require( './jquery-ui-widget-extensions');
         // Show, Hide, and Toggle the spinner.
         hide: function(event) {
             this.element.attr('title', this.original_title);
-            if (this.options.disable_on_spin)
-                this.element.prop('disabled', false);
+            this.targets.prop('disabled', false);
             this.spinner.hide();
             this._trigger( 'hidden' , event);
         },
         show: function(event) {
             this.spinner.show();
             this.element.attr('title', this.options.spin_text);
-            if (this.options.disable_on_spin)
-                this.element.prop('disabled', true);
+            this.targets.prop('disabled', true);
             this._trigger( 'shown' , event);
         },
         toggle : function(event) {

@@ -62,7 +62,7 @@ require( './util' );
             global_controls.prepend(expand_icon.clone())
                            .attr('title', this.options.controlAll_title);
             collapse(global_controls);  // Assume initial state for global control is Expand All?
-            $.data(global_controls, 'controls', col_controls);
+            global_controls.data('controls', col_controls);
             return {
                 col : col_controls,
                 global : global_controls
@@ -82,35 +82,21 @@ require( './util' );
                 if ( isCollapsed(control) ) {
                     collapse(targets);
                 }
-                $.data(this, 'targets', targets);
+                control.data('targets', targets);
             });
-        },
-
-        _expandTargets : function(control, event) {
-            var targets = control.data('targets');
-            expand(targets);
-            this._trigger( 'expanded', event, { control:control, targets:targets });
-        },
-        _collapseTargets : function(control, event) {
-            var targets = control.data('targets');
-            collapse(targets);
-            this._trigger( 'collapsed', event, { control:control, targets:targets });
-        },
-        _toggleTargets : function(control, event) {
-            isCollapsed(control) ? this._expandTargets(control, event) : this._collapseTargets(control, event);
         },
 
         // Events handled by this widget
         _configureEventHandlers : function() {
             var self = this;
             this.controls.col.click( function(event) {
-                self._toggleTargets($(this), event);
+                self.toggleTargets($(this), event);
             });
             this.controls.global.click( function(event) {
                 var control = $(this);
                 expandAll = isCollapsed(control);
                 $.each(self.controls.col, function() {
-                    expandAll ? self._expandTargets($(this), event):self._collapseTargets($(this), event);
+                    expandAll ? self.expandTargets($(this), event):self.collapseTargets($(this), event);
                 });
 
                 // optionally, change control's label
@@ -119,6 +105,7 @@ require( './util' );
                     var label = control.find(selectors.controlLabel);
                     label.html(self.options.controlAll_labels[isCollapsed(control)]);
                 }
+
             });
         },
 
@@ -138,8 +125,23 @@ require( './util' );
             $(selectors.icon).remove();
             this.controls.col.attr('title', '').off('click');
             this.controls.global.attr('title', '').off('click');
-            $.data(this.controls.col, 'targets', null);
-            $.data(this.controls.global, 'controls', null);
+            this.controls.col.data('targets', null);
+            this.controls.global.data('controls', null);
+        },
+
+        // Public methods
+        expandTargets : function(control, event) {
+            var targets = control.data('targets');
+            expand(targets);
+            this._trigger( 'expanded', event, { control:control, targets:targets });
+        },
+        collapseTargets : function(control, event) {
+            var targets = control.data('targets');
+            collapse(targets);
+            this._trigger( 'collapsed', event, { control:control, targets:targets });
+        },
+        toggleTargets : function(control, event) {
+            isCollapsed(control) ? this.expandTargets(control, event) : this.collapseTargets(control, event);
         }
     });
 

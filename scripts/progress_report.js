@@ -30,8 +30,8 @@ require( './util' );
         options: {
             min: 0,
             max: 100,
-            url: false,
-            type: 'POST',
+            action: false,
+            method: 'POST',
 
             // event callbacks (ajax event callbacks also trigger)
             saveForm: null   // called when range_input is changed, before saving - return false to prevent default action
@@ -107,7 +107,7 @@ require( './util' );
             // allow user to augment or override default save logic
             var go = this._trigger( 'saveForm', event, { form_data: this.form.serialize(),
                                                      progress: this.value });
-            if ( go && this.options.url ) {
+            if ( go && this.options.action ) {
                 this._ajaxSubmitForm(this.options);
             }
         }

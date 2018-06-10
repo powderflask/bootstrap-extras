@@ -9,3 +9,4 @@
 require('./spinner');
 require('./col_collapse');
 require('./progress_report');
+require('./edit-this');

@@ -56,13 +56,14 @@ require( './util');
             console.assert(this.form, "BSE ajax_submit_form Error: this.form must be set on widget.");
             var form_data = this.form.serialize() || "",
                 extra_data = settings.data || "",
-                url = settings.url || form.attr('action');
-            console.assert(url, "BSE ajax_submit_form Error: a url or a form action must be supplied.");
+                action = settings.action || form.attr('action'),
+                method = settings.method || form.attr('method') || 'POST';
+            console.assert(action, "BSE ajax_submit_form Error: a form action option must be supplied.");
 
             var self = this;
             args = {
-                url: url,
-                type: settings.type || "POST",
+                url: action,
+                method: method,
                 data: form_data + extra_data,
 
                 // Ajax events

@@ -3,12 +3,6 @@ layout: page
 ---
   <p class="bd-lead">{{ page.description | smartify }}</p>
   {% if page.credits %}
-  <blockquote>
-    Credits: {{ page.credits }}
-    {% if page.credits_url %}
-    <footer>see: <a href="{{ page.credits_url }}" target="_blank">{{ page.credits_url }}</a></footer>
-    {% endif %}
-  </blockquote>
   {% endif %}
   <div class="panel panel-default basic-example">
     <div class="panel-heading">
@@ -22,5 +16,11 @@ layout: page
     </div>
   </div>
 
-  {% include scripts.html %}
+  <blockquote>
+    Credits: {{ page.credits }}
+    {% if page.credits_url %}
+    <footer>see: <a href="{{ page.credits_url }}" target="_blank">{{ page.credits_url }}</a></footer>
+    {% endif %}
+  </blockquote>
 
+  {% include scripts.html %}

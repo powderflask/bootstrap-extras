@@ -45,7 +45,9 @@ function (extentions, pre, sep) {
     obj[key] = pre+base+sep+key;
     return obj;
   }
-  return extentions.reduce(build, {});
+  var map = extentions.reduce(build, {});
+  map[base] = pre+base;
+  return map;
 };
 
 
