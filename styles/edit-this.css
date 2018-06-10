@@ -1,0 +1,11 @@
+
+.bse-edit-this {
+    position: relative;
+}
+.bse-edit-this-content {
+    cursor: pointer;
+}
+.bse-edit-this-icon {
+    margin-left: 5px;
+}
+
