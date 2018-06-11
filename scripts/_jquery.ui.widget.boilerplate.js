@@ -44,8 +44,8 @@ require( './util');
         // Initialize widget instance (e.g. element creation, apply theming, bind events etc.)
         _create: function () {
             console.log('Create ', widgetName, 'instance for', this.element);
-            this._getDataOptions(); // if widget recognizes data-* options in markup
             this._ajaxConfig();    // if widget will use _ajax extensions
+            this._getDataOptions(); // if widget recognizes data-* options in markup
             this.item = this._template();
 
             // Access the element on which the widget was called via this.element

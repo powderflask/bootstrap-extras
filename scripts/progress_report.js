@@ -44,8 +44,10 @@ require( './util' );
             this.value = this.progress_bar.attr('aria-valuenow');
             this.range_input = $.apply(this, markup.input);  // $(...markup.input)
             this.form = $.apply(this, markup.form).append(this.range_input);
-            this.form.ajax_save(this.options);  // set up to optionally save form via Ajax
             this.panel = $.apply(this, markup.panel).append(this.progress).append(this.form);
+
+            // Configure optional Ajax save with callback to hide form on successful requests.
+            this.form.ajax_save( $.extend(this.options, {ajax_success:this.form.hide.bind(this.form)}) );
             this.range_input.attr('min', this.options.min).attr('max', this.options.max);
             this.range_input.val(this.value);
 
@@ -63,10 +65,6 @@ require( './util' );
                 self.progress_bar.css( 'width', self.value+'%');
                 spinner.position( {top: '-1em', left:(self.value-1)+'%'} );
             });
-
-            spinner.option('hidden', function() {
-                this.range_input.blur()}.bind(this)
-            );
 
             this.progress.on('click', function (event) {
                 event.preventDefault();
@@ -87,8 +85,8 @@ require( './util' );
         // Initialize widget instance (e.g. element creation, apply theming, bind events etc.)
         _create: function () {
             // console.log("Create ", widgetName, " instance for", this.element);
-            this._getDataOptions();
             this._ajaxConfig();
+            this._getDataOptions();
             this.element.after(this._template());
             this.element.hide();
             this._configureEventHandlers();

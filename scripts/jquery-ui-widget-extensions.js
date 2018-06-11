@@ -47,7 +47,7 @@ require( './util');
                 ajax_error: null,
                 ajax_complete: null
             };
-            $.extend(this.options, ajax_event_options);
+            this.options = $.extend({}, ajax_event_options, this.options);
         },
 
 
@@ -75,7 +75,7 @@ require( './util');
                 success: function (json, textStatus, xhr) {
                     if (json.message) self.form.before(json.message);
                     if (settings.success) settings.success();
-                    self._trigger('ajax_sucess', null, {args: arguments});
+                    self._trigger('ajax_success', null, {args: arguments});
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     self.form.after($(ajax_error_template.formatUnicorn({textStatus: textStatus})));

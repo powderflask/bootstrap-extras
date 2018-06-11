@@ -3,10 +3,9 @@
  *   -- toggle display value with edit form for the value
  *   -- optionally, AJAX save edited form.
  *
- *   Dependencies:  Bootstrap + JQuery + spinner
+ *   Dependencies:  Bootstrap + JQuery
  *   MIT Open-source License (https://github.com/powderflask/bootstrap_extras/blob/master/LICENSE)
  */
-require( './spinner');
 require( './jquery-ui-widget');
 require( './jquery-ui-widget-extensions');
 require( './util' );
@@ -54,7 +53,8 @@ require( './util' );
             // And the form...
             var form_id = this.element.data('form_id');
             this.form = $('#'+form_id);
-            this.form.ajax_save(this.options);  // set up to optionally save form via Ajax
+            // Configure optional Ajax save with callback to hide the form on successful requests.
+            this.form.ajax_save( $.extend(this.options, {ajax_success:this.hideForm.bind(this)}) );
 
             // ... move form to edit-this panel ...
             this.form_controls = this.form.find( ':input' );
@@ -68,8 +68,7 @@ require( './util' );
 
         // Events handled by this widget
         _configureEventHandlers : function() {
-            var self = this,
-                spinner = self.form.spinner('instance');  // ouch - tight coupling to ajax-save here.
+            var self = this;
 
             this.content.on('click', function (event) {
                 event.preventDefault();
@@ -89,17 +88,13 @@ require( './util' );
                 self.form.submit();
                 self.hideForm(event);
             });
-
-            spinner.option('hidden', function() {
-                this.hideForm()}.bind(this)
-            );
         },
 
         // Initialize widget instance (e.g. element creation, apply theming, bind events etc.)
         _create: function () {
             // console.log("Create ", widgetName, " instance for", this.element);
-            this._getDataOptions();
             this._ajaxConfig();
+            this._getDataOptions();
             this._configureControls();
             this._configureEventHandlers();
         },
