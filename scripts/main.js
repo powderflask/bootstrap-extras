@@ -11,3 +11,4 @@ require('./edit-this');
 require('./col_collapse');
 require('./progress_report');
 require('./spinner');
+require('./toggle_that');
