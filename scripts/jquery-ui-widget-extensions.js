@@ -71,7 +71,6 @@ require( './util');
             args.url = settings.url || settings.action;
             console.assert(args.url, "BSE ajaxDelete Error: a url must be supplied.");
 
-            console.log("Make Ajax delete request", args);
             this._ajaxRequest(target, args);
         },
 

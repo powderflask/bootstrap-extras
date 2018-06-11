@@ -9,8 +9,8 @@ A collection of small, re-usable front-end components to extend Bootstrap functi
 
 CONTENTS:
 --------
- * ajax_delete:     Submit a simple Delete request via Ajax.
- * ajax_save:       Submit a form via Ajax.
+ * ajax_delete_it:  Submit a simple Delete request via Ajax.
+ * ajax_save_form:  Submit a form via Ajax.
  * column_collapse: got a wide table?  short on real-estate?  Allow user to collapse some of those columns down.
  * edit_this:       a display value that reveals a form when clicked, optional Ajax save on form change.
  * progress_report: want a user-adjustable progress bar?  This is it!  With optional Ajax save.

@@ -12,7 +12,7 @@ require( './util' );
 
 ;(function( $, window, document, undefined ) {
 
-    var widgetName = 'bse.ajax_delete',
+    var widgetName = 'bse.ajax_delete_it',
         widgetClass = 'bse-ajax-delete',
         selectors = widgetClass.buildNamesMap(['it', 'control', 'target'], '.');
 
@@ -47,14 +47,13 @@ require( './util' );
             });
 
             this.options.ajax_success = function() {
-                console.log("Ajax delete success");
                 self.element.hide();
             }
         },
 
         // Initialize widget instance (e.g. element creation, apply theming, bind events etc.)
         _create: function () {
-            console.log("Create ", widgetName, " instance for", this.element);
+            // console.log("Create ", widgetName, " instance for", this.element);
             this._ajaxConfig();
             this._getDataOptions();
             this._configureControls();
@@ -83,7 +82,7 @@ require( './util' );
         }
     });
 
-    $(selectors['it']).ajax_delete();
+    $(selectors.it).ajax_delete_it();
 
 })( jQuery, window, document );
 
