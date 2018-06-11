@@ -1,5 +1,5 @@
 /**
- * AJAX Save This Component (v0.1): ajax_save.js
+ * AJAX Save This Component (v0.1): ajax_save_form.js
  *   -- simple form sumbit via ajax.
  *
  *   Dependencies:  Bootstrap + JQuery + spinner
@@ -12,9 +12,9 @@ require( './util' );
 
 ;(function( $, window, document, undefined ) {
 
-    var widgetName = 'bse.ajax_save',
-        widgetClass = 'bse-ajax-save',
-        selectors = widgetClass.buildNamesMap(['this'], '.');
+    var widgetName = 'bse.ajax_save_form',
+        widgetClass = 'bse-ajax-save-form',
+        selectors = widgetClass.buildNamesMap([], '.');
 
     $.widget( widgetName, {
 
@@ -70,7 +70,7 @@ require( './util' );
         }
     });
 
-    $(selectors['this']).ajax_save();
+    $(selectors[widgetClass]).ajax_save_form();
 
 })( jQuery, window, document );
 

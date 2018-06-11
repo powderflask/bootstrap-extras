@@ -7,7 +7,7 @@
  */
 
 require('./ajax_delete_it');
-require('./ajax_save');
+require('./ajax_save_form');
 require('./edit-this');
 require('./col_collapse');
 require('./progress_report');

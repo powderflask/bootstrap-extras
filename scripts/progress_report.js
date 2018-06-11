@@ -47,7 +47,7 @@ require( './util' );
             this.panel = $.apply(this, markup.panel).append(this.progress).append(this.form);
 
             // Configure optional Ajax save with callback to hide form on successful requests.
-            this.form.ajax_save( $.extend(this.options, {ajax_success:this.form.hide.bind(this.form)}) );
+            this.form.ajax_save_form( $.extend(this.options, {ajax_success:this.form.hide.bind(this.form)}) );
             this.range_input.attr('min', this.options.min).attr('max', this.options.max);
             this.range_input.val(this.value);
 

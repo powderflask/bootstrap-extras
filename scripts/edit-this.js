@@ -54,7 +54,7 @@ require( './util' );
             var form_id = this.element.data('form_id');
             this.form = $('#'+form_id);
             // Configure optional Ajax save with callback to hide the form on successful requests.
-            this.form.ajax_save( $.extend(this.options, {ajax_success:this.hideForm.bind(this)}) );
+            this.form.ajax_save_form( $.extend(this.options, {ajax_success:this.hideForm.bind(this)}) );
 
             // ... move form to edit-this panel ...
             this.form_controls = this.form.find( ':input' );
