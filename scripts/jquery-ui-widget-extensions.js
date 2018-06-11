@@ -52,47 +52,53 @@ require( './util');
 
 
         // Submit this.form by ajax, with an optional this.spinner to display while loading
-        _ajaxSubmitForm : function(settings) {
-            console.assert(this.form, "BSE ajax_submit_form Error: this.form must be set on widget.");
-            var form_data = this.form.serialize() || "",
-                extra_data = settings.data || "",
-                action = settings.action || form.attr('action'),
-                method = settings.method || form.attr('method') || 'POST';
-            console.assert(action, "BSE ajax_submit_form Error: a form action option must be supplied.");
+        _ajaxSubmitForm : function(form, settings) {
+            var args = Object.create(settings),
+                form_data = form.serialize() || "",
+                extra_data = settings.data || "";
+            args.data = form_data + extra_data;
+            args.method = settings.method || form.attr('method') || 'POST';
+            args.url = settings.action || settings.url || form.attr('action');
+            console.assert(args.url, "BSE ajaxSubmitForm Error: a url or form action option must be supplied.");
 
-            var self = this;
-            args = {
-                url: action,
-                method: method,
-                data: form_data + extra_data,
+            this._ajaxRequest(form, args);
+        },
 
-                // Ajax events
-                beforeSend: function () {
-                    if (self.spinner) self.spinner.show();
-                    if (settings.beforeSend) settings.beforeSend();
-                    self._trigger('ajax_beforeSend', null, {form_data: form_data, args: arguments});
-                },
-                success: function (json, textStatus, xhr) {
-                    if (json.message) self.form.before(json.message);
-                    if (settings.success) settings.success();
-                    self._trigger('ajax_success', null, {args: arguments});
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    self.form.after($(ajax_error_template.formatUnicorn({textStatus: textStatus})));
-                    console.log(xhr.status + ": " + xhr.responseText);
-                    console.log(errorThrown);
-                    if (settings.error) settings.error();
-                    self._trigger('ajax_error', null, {args: arguments});
-                },
-                complete: function (xhr, textStatus) {
-                    if (self.spinner) self.spinner.hide();
-                    if (settings.complete) settings.complete();
-                    self._trigger('ajax_complete', null, {args: arguments});
-                }
-            };
+        // Make a DELETE ajax request for this.element, with an optional this.spinner to display while loading
+        _ajaxDelete : function(target, settings) {
+            var args = Object.create(settings);
+            args.method = settings.method || 'DELETE';
+            args.url = settings.url || settings.action;
+            console.assert(args.url, "BSE ajaxDelete Error: a url must be supplied.");
 
-            $.ajax(args);
+            console.log("Make Ajax delete request", args);
+            this._ajaxRequest(target, args);
+        },
 
+        _ajaxRequest: function(target, args) {
+            var self = this,
+                ajax_events = {
+                    beforeSend: function () {
+                        if (self.spinner) self.spinner.show();
+                        self._trigger('ajax_beforeSend', null, {args: args});
+                    },
+                    success: function (json, textStatus, xhr) {
+                        if (json.message) target.after(json.message);
+                        self._trigger('ajax_success', null, {args: arguments});
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        target.after($(ajax_error_template.formatUnicorn({textStatus: textStatus})));
+                        console.log(xhr.status + ": " + xhr.responseText);
+                        console.log(errorThrown);
+                        self._trigger('ajax_error', null, {args: args, xhr_args: arguments});
+                    },
+                    complete: function (xhr, textStatus) {
+                        if (self.spinner) self.spinner.hide();
+                        self._trigger('ajax_complete', null, {args: args, xhr_args: arguments});
+                    }
+                };
+
+            $.ajax($.extend(ajax_events, args));
         }
     };
 

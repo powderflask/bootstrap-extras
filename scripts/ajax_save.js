@@ -14,8 +14,7 @@ require( './util' );
 
     var widgetName = 'bse.ajax_save',
         widgetClass = 'bse-ajax-save',
-        classes = widgetClass.buildNamesMap(['this', 'it']),
-        selectors = widgetClass.buildNamesMap(['this', 'it'], '.');
+        selectors = widgetClass.buildNamesMap(['this'], '.');
 
     $.widget( widgetName, {
 
@@ -25,7 +24,7 @@ require( './util' );
             method: 'POST',
 
             // event callbacks (ajax event callbacks also trigger)
-            saveForm: null   // called when range_input is changed, before saving - return false to prevent default action
+            saveForm: null   // called just before save request made - return false to prevent default action
         },
 
         // Configure the widget controls (edit icon and form elements)
@@ -48,9 +47,9 @@ require( './util' );
 
         // Initialize widget instance (e.g. element creation, apply theming, bind events etc.)
         _create: function () {
-            console.log("Create ", widgetName, " instance for", this.element);
-            this._getDataOptions();
+            // console.log("Create ", widgetName, " instance for", this.element);
             this._ajaxConfig();
+            this._getDataOptions();
             this._configureControls();
             this._configureEventHandlers();
         },
@@ -66,12 +65,12 @@ require( './util' );
             // allow user to augment or override default save logic
             var go = this._trigger( 'saveForm', event, { form_data: this.form.serialize() });
             if ( go && this.options.action ) {
-                this._ajaxSubmitForm(this.options);
+                this._ajaxSubmitForm(this.form, this.options);
             }
         }
     });
 
-    $(selectors[widgetClass]).ajax_save();
+    $(selectors['this']).ajax_save();
 
 })( jQuery, window, document );
 

@@ -16,7 +16,7 @@ require( './util' );
     var widgetName = 'bse.progress_report',
         widgetClass = 'bse-progress-report',
         classes = widgetClass.buildNamesMap(['panel', 'form', 'value']),
-        selectors = widgetClass.buildNamesMap(['wrap'], '.'),
+        selectors = widgetClass.buildNamesMap([], '.'),
 
         markup = {
             panel : ['<div>', {'class': classes.panel}],
@@ -100,7 +100,7 @@ require( './util' );
         }
     });
 
-    $(selectors.wrap).progress_report();
+    $(selectors[widgetClass]).progress_report();
 
 })( jQuery, window, document );
 
