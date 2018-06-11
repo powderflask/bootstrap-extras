@@ -5,7 +5,7 @@ A collection of small, re-usable front-end components to extend Bootstrap functi
  * Version: 0.1
  * Author: powderflask
  * Author URI: https://github.com/powderflask/bootstrap-extras
- * License: MIt see License
+ * License: MIT see License
 
 CONTENTS:
 --------

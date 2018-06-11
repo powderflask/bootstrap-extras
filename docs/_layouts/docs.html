@@ -2,8 +2,7 @@
 layout: page
 ---
   <p class="bd-lead">{{ page.description | smartify }}</p>
-  {% if page.credits %}
-  {% endif %}
+
   <div class="panel panel-default basic-example">
     <div class="panel-heading">
       <h4 class="panel-title">Basic Example</h4>
@@ -16,11 +15,13 @@ layout: page
     </div>
   </div>
 
+  {% if page.credits %}
   <blockquote>
     Credits: {{ page.credits }}
     {% if page.credits_url %}
     <footer>see: <a href="{{ page.credits_url }}" target="_blank">{{ page.credits_url }}</a></footer>
     {% endif %}
   </blockquote>
+  {% endif %}
 
   {% include scripts.html %}
