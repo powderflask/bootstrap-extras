@@ -55,14 +55,14 @@ Future:
 
 BUILD:
 -----
- > npm install; cd docs; bundle install;  
- > npm run build;      # build dist and docs
- > npm run serve:dev;  # serve docs on dev
- > npm make:dev;       # build, serve, and open docs on dev
+    > npm install; cd docs; bundle install;  
+    > npm run build-dev;  # build dev dist and docs
+    > npm run serve:dev;  # serve docs on dev
+    > npm make:dev;       # build, serve, and open docs on dev
+    > npm run build-prod; # build production dist and docs
 
 TO DO:
  - improve options to pass ajax object, merged with ajax defaults (see Select2)
- - add explicit credits here
  - build out other components
  - unit tests!!
  - add options and events to widget docs
