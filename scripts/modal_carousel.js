@@ -41,6 +41,7 @@ require( './util' );
             title: false,     // Override for modal title to use instead of title of active carousel img
             items: '',        // optional, a selector for carousel items elsewhere in the DOM
             url: false,       // optional, a url for carousel items loaded via Ajax
+            carouselOptions: {interval: false},  // prevent auto-slide by default
 
             // event callbacks (ajax event callbacks also trigger)
             loadContent: null   // called just prior to loading content via Ajax - return false to prevent default action
@@ -76,7 +77,7 @@ require( './util' );
                                             .append($.apply(this, markup.close))
                                         )
                                     );
-            this.carousel.carousel({interval: false});
+            this.carousel.carousel(this.options.carouselOptions);
             return this.modal_dialog;
         },
 

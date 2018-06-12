@@ -7,16 +7,16 @@ A collection of small, re-usable front-end components to extend Bootstrap functi
  * Author URI: https://github.com/powderflask/bootstrap-extras
  * License: MIT see License
 
-CONTENTS:
---------
+COMPONENTS:
+----------
  * ajax_delete_it:  Submit a simple Delete request via Ajax.
  * ajax_save_form:  Submit a form via Ajax.
  * column_collapse: got a wide table?  short on real-estate?  Allow user to collapse some of those columns down.
  * edit_this:       a display value that reveals a form when clicked, optional Ajax save on form change.
+ * modal_carousel:  a bootstrap carousel in a boostrap modal, with data loaded from DOM or AJAX
  * progress_report: want a user-adjustable progress bar?  This is it!  With optional Ajax save.
  * spinner:         a simple, CSS-only spinner (credit: http://jsfiddle.net/csswizardry/M2D4M/)
- * toggle_that:     got 2 views of same content (e.g., value/form field)? Let user toggle between them.
- * modal_carousel:  a bootstrap carousel in a modal pane
+ * toggle_that:     got a bunch of disparate elements that all need to toggle together? 
  * slidout_tools:   a sticky toolbar with slide-out tabs
  * Widget Ajax-mixin: mix-in simple, standardized AJAX interactions to any widget & emit ajax events
 
@@ -25,14 +25,16 @@ INSTALLATION:
  Download distribution.  Add it to your project.  Done.
  External Dependencies:  Bootstrap 3, JQuery 2+
     -- these must be loaded in browser before bse;  Manual dependency to avoid browserify-shim nonsense.
-
+ 
 USAGE:
 ------
+ Each component is a [jQuery UI Widget](http://jqueryui.com/widget/) that can be activated with markup or in code.
+
  See:  https://powderflask.github.io/bootstrap-extras/
 
 DEVELOPMENT:
 ------------
-Each component is built using the jQuery UI Widget Factory:  http://jqueryui.com/widget/
+Each component is built using the jQuery UI Widget Factory:  http://api.jqueryui.com/jQuery.widget/
   (no other dependency or relation to jQuery UI -- just a consistent, convenient way to build plugins)
   
 The components in this library were custom-build for a specific application.
