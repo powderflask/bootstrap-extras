@@ -8,8 +8,9 @@
 
 require('./ajax_delete_it');
 require('./ajax_save_form');
-require('./edit-this');
 require('./col_collapse');
+require('./edit-this');
+require('./modal_carousel');
 require('./progress_report');
 require('./spinner');
 require('./toggle_that');
