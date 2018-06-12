@@ -49,19 +49,3 @@ function (extentions, pre, sep) {
   map[base] = pre+base;
   return map;
 };
-
-
-// replace jQuery.ajax with a function that mocks a successful AJAX response.
-// call bseAjaxMockSuccess() before testing.  To Do:  use proper testing framework (jest) + http://sinonjs.org/#testing-ajax
-bseAjaxMockSuccess = function() {
-    $.ajax = function(args) {
-        args.beforeSend();
-        console.log("call ajax:", args);
-        setTimeout(function() {
-            args.success({message : 'Mock AJAX call (success).'});
-        }, 3000);
-        setTimeout(function() {
-            args.complete();
-        }, 3000);
-    }
-};

@@ -1,7 +1,7 @@
 
 <button type="button" data-toggle="modal" data-target="#puppiesModal">Modal Puppies</button>
 
-<div class="bse-modal-carousel" id="puppiesModal">
+<div class="bse-modal-carousel" id="puppiesModal" data-url="/path/to/carousel/content/endpoint/">
     <div class="item active">
       <img src="https://i.pinimg.com/736x/dd/20/f3/dd20f3e0934de376bdf50632e210d3f2--belgian-dog-belgian-malinois-puppies.jpg" title="Belgian Malinois Puppy">
       <div class="carousel-caption">
@@ -22,10 +22,8 @@
 <div class="bse-modal-carousel" id="kittensModal" data-title="Evil Kittens" data-items="#kittenImages .item">
 </div>
 
-
-
-<!-- content may come from any other part of the markup -->
-<div id="kittenImages">
+<!-- carousel items may also come from any other part of the markup or from an Ajax request using data-url -->
+<div id="kittenImages" style="display:none">
     <div class="item active">
       <img src="http://brostrick-prod.s3.amazonaws.com/wp-content/uploads/2015/10/05085901/cat-memes-10.png" title="Sly kitten">
       <div class="carousel-caption">
@@ -38,4 +36,9 @@
         Source: https://i.pinimg.com/736x/86/ca/ec/86caec10e9fba576e60f51e24721e6d7.jpg
       </div>
     </div>
+</div>
+
+<button type="button" data-toggle="modal" data-target="#ajaxModal">Ajax Modal</button>
+
+<div class="bse-modal-carousel" id="ajaxModal" data-url="/path/to/carousel/content/endpoint/">
 </div>

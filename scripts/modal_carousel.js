@@ -8,13 +8,13 @@
  */
 require( './jquery-ui-widget');
 require( './jquery-ui-widget-extensions');
+require( './spinner.js' );
 require( './util' );
 
 ;(function( $, window, document, undefined ) {
 
     var widgetName = 'bse.modal_carousel',
         widgetClass = 'bse-modal-carousel',
-        classes = widgetClass.buildNamesMap(['panel', 'form', 'value']),
         selectors = widgetClass.buildNamesMap([], '.'),
 
         markup = {
@@ -33,40 +33,14 @@ require( './util' );
             footer : ['<div>', {'class': 'modal-footer'}],
             close : ['<button>', {'class': 'btn btn-default', 'data-dismiss': 'modal', text: 'Close'}],
         };
-/*
-<div class="modal" id="modal-gallery" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-          <button class="close" type="button" data-dismiss="modal">×</button>
-          <h3 class="modal-title"></h3>
-      </div>
-      <div class="modal-body">
-          <div id="modal-carousel" class="carousel">
 
-            <div class="carousel-inner">
-            </div>
-
-            <a class="carousel-control left" href="#modal-carousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
-            <a class="carousel-control right" href="#modal-carousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
-
-          </div>
-      </div>
-      <div class="modal-footer">
-          <button class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-*/
     $.widget( widgetName, {
 
         // Options to be used as defaults
         options: {
-            title: false,     // Override for default modal title (title of active carousel image)
-            items: '',        // optionally, a selector for carousel items elsewhere in the DOM
-            action: false,
-            method: 'POST',
+            title: false,     // Override for modal title to use instead of title of active carousel img
+            items: '',        // optional, a selector for carousel items elsewhere in the DOM
+            url: false,       // optional, a url for carousel items loaded via Ajax
 
             // event callbacks (ajax event callbacks also trigger)
             loadContent: null   // called just prior to loading content via Ajax - return false to prevent default action
@@ -76,22 +50,19 @@ require( './util' );
         _template : function(modal_id) {
             var carousel_id = modal_id+'-carousel',
                 carousel_selector = '#'+carousel_id;
-            // Carousel items may be inline in the element, content elsewhere on the DOM, or via Ajax
-            this.items = this.element.find('.item')
-                                     .add(this.options.items);
-
+            // The carousel and carousel items...
+            this.carousel_inner = $.apply(this, markup.inner);
+            this.items = this._loadItems(this.carousel_inner);
             this.carousel = $.apply(this, markup.carousel).attr('id', carousel_id)
-                                .append($.apply(this, markup.inner)
-                                    .append(this.items)
-                                )
+                                .append(this.carousel_inner)
                                 .append($.apply(this, markup.controlLeft).attr('href',carousel_selector)
                                     .append($.apply(this, markup.iconLeft))
                                 )
                                 .append($.apply(this, markup.controlRight).attr('href',carousel_selector)
                                     .append($.apply(this, markup.iconRight))
                                 );
-            this.modal_title = $.apply(this, markup.title);
-            this._set_title();
+            // ... loaded into a modal dialog ...
+            this.modal_title = $.apply(this, markup.title).text(this._getTitleText());
             this.modal_dialog = $.apply(this, markup.dialog)
                                     .append($.apply(this, markup.content)
                                         .append($.apply(this, markup.header)
@@ -105,45 +76,99 @@ require( './util' );
                                             .append($.apply(this, markup.close))
                                         )
                                     );
+            this.carousel.carousel({interval: false});
             return this.modal_dialog;
         },
 
-        // Set the modal title
-        _set_title : function() {
-            var title = this.options.title ||
-                        this.carousel.find(".item.active img").attr("title")
-            this.modal_title.html(title);
+        // Load carousel items to the target element and check exactly 1 item is active
+        _loadItems: function(target) {
+            // Carousel items may be inline in the element or added from elsewhere on the DOM...
+            var items = this.element.find('.item')
+                                     .add(this.options.items);
+            // ... or loaded via Ajax...
+            this._loadAjaxItems(target, items);
+
+            // Activate current set of items and move them to the target container.
+            this._activateItems(items);
+            target.append(items);
+            return items;
+        },
+
+        // Load carousel items via Ajax, adding any items loaded to the items object when they arrive
+        _loadAjaxItems: function(target, items) {
+            if (this.options.url) {
+                var spinner = this._addSpinner(target),
+                    ajax_target = $('<div>'),
+                    self = this;
+                ajax_target.load(this.options.url, function() {
+                    self._removeSpinner(spinner);
+                    var ajax_items = ajax_target.find('.item');
+                    target.append(ajax_items);
+                    items = items.add(ajax_items);
+                    self._activateItems(items);
+                    self.modal_title.html(self._getTitleText());
+                });
+            }
+        },
+
+        // Create a spinner item in the given target
+        _addSpinner: function(target) {
+            var spinner = $('<div>', {'class': 'item active'}).spinner();
+            spinner.spinner('show');
+            target.append(spinner);
+            return spinner;
+        },
+        // destroly and remove the given spinner
+        _removeSpinner: function(spinner) {
+            spinner.spinner('destroy');
+            spinner.remove();
+        },
+
+        // Get the modal title text, which may be set by option or pulled from active img in carousel
+        _getTitleText: function() {
+            return this.options.title || this.carousel.find(".item.active img").attr("title");
+        },
+
+        // Ensure exactly one item is active.
+        _activateItems: function(items) {
+            var active = items.filter('.active');
+            if (active.length>1) {
+                active.removeClass('active');
+                active.first().addClass('active');
+            }
+            else if (active.length < 1) {
+                items.first().addClass('active');
+            }
         },
 
         // Events handled by this widget
         _configureEventHandlers : function() {
             var self = this;
             this.carousel.on("slid.bs.carousel", function () {
-                self._set_title();
+                self.modal_title.html(self._getTitleText());
             });
         },
 
         // Initialize widget instance (e.g. element creation, apply theming, bind events etc.)
         _create: function () {
-            console.log("Create ", widgetName, " instance for", this.element);
+            // console.log("Create ", widgetName, " instance for", this.element);
             this._ajaxConfig();
             this._getDataOptions();
             this.element.addClass('modal').attr('role', 'dialog');
             this.element.append(this._template(this.element.attr('id')));
-            //this.element.hide();
             this._configureEventHandlers();
         },
 
         // Destroy plugin instance  and clean up modifications the widget has made to the DOM
         _destroy: function () {
-            console.log("Destroy: ", this.modal);
-            this.element.append(this.items);
-            this.element.removeClass('modal');
-            this.modal_dialog.remove()
+            //console.log("Destroy: ", this.modal);
+            // Does not appear to be a way to disable a BS modal once it's been enabled.
+            // this.element.append(this.items);
+            // this.element.removeClass('modal');
+            // this.modal_dialog.remove()
         }
     });
 
     $(selectors[widgetClass]).modal_carousel();
 
 })( jQuery, window, document );
-
