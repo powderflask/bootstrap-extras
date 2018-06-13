@@ -10,6 +10,7 @@ require('./ajax_delete_it');
 require('./ajax_save_form');
 require('./col_collapse');
 require('./edit-this');
+require('./move-this');
 require('./modal_carousel');
 require('./progress_report');
 require('./spinner');

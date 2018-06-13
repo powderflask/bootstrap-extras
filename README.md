@@ -14,15 +14,16 @@ COMPONENTS:
  * column_collapse: got a wide table?  short on real-estate?  Allow user to collapse some of those columns down.
  * edit_this:       a display value that reveals a form when clicked, optional Ajax save on form change.
  * modal_carousel:  a bootstrap carousel in a boostrap modal, with data loaded from DOM or AJAX
+ * move_this:       move an element to a container elsewhere in the markup
  * progress_report: want a user-adjustable progress bar?  This is it!  With optional Ajax save.
  * spinner:         a simple, CSS-only spinner (credit: http://jsfiddle.net/csswizardry/M2D4M/)
  * toggle_that:     got a bunch of disparate elements that all need to toggle together? 
- * slidout_tools:   a sticky toolbar with slide-out tabs
+ * slideout_tools:  a sticky toolbar with slide-out tabs
  * Widget Ajax-mixin: mix-in simple, standardized AJAX interactions to any widget & emit ajax events
 
 INSTALLATION:
 -------------
- Download distribution.  Add it to your project.  Done.
+ Download /dist  Add it to your project.  Done.
  External Dependencies:  Bootstrap 3, JQuery 2+
     -- these must be loaded in browser before bse;  Manual dependency to avoid browserify-shim nonsense.
  
@@ -45,11 +46,12 @@ Fork your own: https://github.com/powderflask/bootstrap_extras
 
 TOOL CHAIN:
 ----------
+ - HTML5, CSS3, ES5, jQuery, Bootstrap 3
  - npm build scripts (see https://github.com/keithamus/npm-scripts-example, https://www.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/)
- - Jeckyll + Github Pages for docs
+ - Jeckyll (gem) + Github Pages for docs
 
 Future:
- - Jest test framework (https://facebook.github.io/jest/) + Sinon fakes (http://sinonjs.org)
+ - [Jest](https://facebook.github.io/jest/) or [Qunit](http://qunitjs.com/) test framework + Sinon fakes (http://sinonjs.org)
  - Sass css transpiler
  - ES6 modules & syntax (see: https://www.contentful.com/blog/2017/04/04/es6-modules-support-lands-in-browsers-is-it-time-to-rethink-bundling/)
 
