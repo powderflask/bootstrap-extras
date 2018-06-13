@@ -16,9 +16,9 @@ COMPONENTS:
  * modal_carousel:  a bootstrap carousel in a boostrap modal, with data loaded from DOM or AJAX
  * move_this:       move an element to a container elsewhere in the markup
  * progress_report: want a user-adjustable progress bar?  This is it!  With optional Ajax save.
+ * slideout_tools:  a fixed toolbar with slide-out buttons constructed from DOM elements anywhere in markup
  * spinner:         a simple, CSS-only spinner (credit: http://jsfiddle.net/csswizardry/M2D4M/)
  * toggle_that:     got a bunch of disparate elements that all need to toggle together? 
- * slideout_tools:  a sticky toolbar with slide-out tabs
  * Widget Ajax-mixin: mix-in simple, standardized AJAX interactions to any widget & emit ajax events
 
 INSTALLATION:
@@ -65,6 +65,6 @@ BUILD:
 
 TO DO:
  - improve options to pass ajax object, merged with ajax defaults (see Select2)
- - build out other components
  - unit tests!!
  - add options and events to widget docs
+ - add docs pages for component combo examples?

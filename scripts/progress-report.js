@@ -6,9 +6,9 @@
  *   Dependencies:  Bootstrap + JQuery + spinner
  *   MIT Open-source License (https://github.com/powderflask/bootstrap_extras/blob/master/LICENSE)
  */
-require( './spinner');
 require( './jquery-ui-widget');
 require( './jquery-ui-widget-extensions');
+require( './spinner');
 require( './util' );
 
 ;(function( $, window, document, undefined ) {
