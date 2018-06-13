@@ -1,5 +1,5 @@
 /**
- * Progress Report Component (v0.1): progress_report.js
+ * Progress Report Component (v0.1): progress-report.js
  *   -- a Bootstrap Progress Bar with an interactive range input
  *   -- AJAX save selected value using standard HMTL form.
  *

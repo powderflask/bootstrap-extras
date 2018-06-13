@@ -1,5 +1,5 @@
 /**
- * AJAX Save This Component (v0.1): ajax_save_form.js
+ * AJAX Save This Component (v0.1): ajax-save-form.js
  *   -- simple form sumbit via ajax.
  *
  *   Dependencies:  Bootstrap + JQuery + spinner

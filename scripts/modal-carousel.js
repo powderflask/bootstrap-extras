@@ -1,5 +1,5 @@
 /**
- * Modal Carousel Component (v0.1): modal_carousel.js
+ * Modal Carousel Component (v0.1): modal-carousel.js
  *   -- a Bootstrap Image Carousel within a Bootstrap Modal
  *   -- data source for Carousel can be inline, loaded from another element, or loaded via Ajax request
  *

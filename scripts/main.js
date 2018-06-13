@@ -6,12 +6,12 @@
  *   MIT Open-source License (https://github.com/powderflask/bootstrap_extras/blob/master/LICENSE)
  */
 
-require('./ajax_delete_it');
-require('./ajax_save_form');
-require('./col_collapse');
+require('./ajax-delete-it');
+require('./ajax-save-form');
+require('./col-collapse');
 require('./edit-this');
 require('./move-this');
-require('./modal_carousel');
-require('./progress_report');
+require('./modal-carousel');
+require('./progress-report');
 require('./spinner');
-require('./toggle_that');
+require('./toggle-that');

@@ -1,5 +1,5 @@
 /**
- * Table Column Collapse (v0.1): col_collapse.js
+ * Table Column Collapse (v0.1): col-collapse.js
  *   -- Collapse / Expand table columns by clicking on a cc-control.
  *   -- Demo: https://jsfiddle.net/powderflask/gd7ct85q/
  *   Use data-controls attribute on control to specify class of cc-target elements to collapse.

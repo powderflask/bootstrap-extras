@@ -1,5 +1,5 @@
 /**
- * Toggle That (v0.1): toggle_that.js
+ * Toggle That (v0.1): toggle-that.js
  *   -- toggle a collection of elements from a set of controls
  *
  *   Dependencies:  Bootstrap + JQuery

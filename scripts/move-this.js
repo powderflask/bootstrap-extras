@@ -24,7 +24,7 @@ require( './jquery-ui-widget-extensions');
 
         // Initialize widget instance (e.g. element creation, apply theming, bind events etc.)
         _create: function () {
-            console.log('Create ', widgetName, 'instance for', this.element);
+            // console.log('Create ', widgetName, 'instance for', this.element);
             this._getDataOptions(); // if widget recognizes data-* options in markup
 
             console.assert(this.options.target, "BSE move_this Error: a target selector must be supplied");

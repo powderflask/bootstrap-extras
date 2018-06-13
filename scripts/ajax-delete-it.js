@@ -1,5 +1,5 @@
 /**
- * AJAX Delete It Component (v0.1): ajax_delete_it.js
+ * AJAX Delete It Component (v0.1): ajax-delete-it.js
  *   -- simple delete request via ajax.
  *
  *   Dependencies:  Bootstrap + JQuery + spinner
