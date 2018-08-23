@@ -8,6 +8,7 @@
  */
 require( './jquery-ui-widget');
 require( './jquery-ui-widget-extensions');
+require('./ajax-save-form');
 require( './spinner');
 require( './util' );
 

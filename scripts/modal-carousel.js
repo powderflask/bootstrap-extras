@@ -87,29 +87,34 @@ require( './util' );
             var items = this.element.find('.item')
                                      .add(this.options.items);
             // ... or loaded via Ajax...
-            this._loadAjaxItems(target, items);
-
+            if (this.options.url) {
+                this._loadAjaxItems(target, this.options.url, items);
+            }
             // Activate current set of items and move them to the target container.
             this._activateItems(items);
             target.append(items);
             return items;
         },
 
+        // Remove carousel items from this carousel.
+        _removeItems: function() {
+            this.element.find('.item').remove();
+            this.items = this.element.find('.item');
+        },
+
         // Load carousel items via Ajax, adding any items loaded to the items object when they arrive
-        _loadAjaxItems: function(target, items) {
-            if (this.options.url) {
-                var spinner = this._addSpinner(target),
-                    ajax_target = $('<div>'),
-                    self = this;
-                ajax_target.load(this.options.url, function() {
-                    self._removeSpinner(spinner);
-                    var ajax_items = ajax_target.find('.item');
-                    target.append(ajax_items);
-                    items = items.add(ajax_items);
-                    self._activateItems(items);
-                    self.modal_title.html(self._getTitleText());
-                });
-            }
+        _loadAjaxItems: function(target, url, items) {
+            var spinner = this._addSpinner(target),
+                ajax_target = $('<div>'),
+                self = this;
+            ajax_target.load(url, function() {
+                self._removeSpinner(spinner);
+                var ajax_items = ajax_target.find('.item');
+                target.append(ajax_items);
+                items = items.add(ajax_items);
+                self._activateItems(items);
+                self.modal_title.html(self._getTitleText());
+            });
         },
 
         // Create a spinner item in the given target
@@ -148,6 +153,15 @@ require( './util' );
             this.carousel.on("slid.bs.carousel", function () {
                 self.modal_title.html(self._getTitleText());
             });
+            this.element.on('show.bs.modal', function (event) {
+              var button = $(event.relatedTarget), // Button that triggered the modal
+                  url = button.data('url'); // If button supplies a URL, use it to load items...
+              if (url) {
+                  console.log("Loading from url", url);
+                  self._removeItems();
+                  self._loadAjaxItems(self.carousel_inner, url, self.items);
+              }
+            })
         },
 
         // Initialize widget instance (e.g. element creation, apply theming, bind events etc.)
