@@ -14,8 +14,8 @@ require( './util' );
 
     var widgetName = 'bse.edit_this',
         widgetClass = 'bse-edit-this',
-        classes = widgetClass.buildNamesMap(['icon', 'content']),
-        selectors = widgetClass.buildNamesMap(['content'], '.'),
+        classes = widgetClass.buildNamesMap(['icon', 'content', 'control']),
+        selectors = widgetClass.buildNamesMap(['content', 'control'], '.'),
 
         markup = {
             edit_icon: ['<span>', {'class': classes.icon, 'aria-hidden': 'true'}]
@@ -38,7 +38,7 @@ require( './util' );
 
         // Update the content area from the current form value.
         _updateContent : function() {
-            this.content.html(this.form_controls.val());
+            this.content.html(this.form_control.value);
             this.content.append(this.edit_icon);
         },
 
@@ -57,7 +57,9 @@ require( './util' );
             this.form.ajax_save_form( $.extend(this.options, {ajax_success:this.hideForm.bind(this)}) );
 
             // ... move form to edit-this panel ...
-            this.form_controls = this.form.find( ':input' );
+            controls = this.form.find( selectors.control );
+            console.assert(controls.length == 1, "BSE edit_this Error: a single 'control' must be identified in edit form")
+            this.form_control = controls[0];
             this.element.append(this.form.hide());
         },
 
@@ -73,7 +75,7 @@ require( './util' );
             this.content.on('click', function (event) {
                 event.preventDefault();
                 self.showForm(event);
-                self.form_controls[0].focus();
+                self.form_control.focus();
             });
             // hide form on clicks that are not within the element.
             $('body').click(function(event) {
