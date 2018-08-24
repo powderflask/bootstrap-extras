@@ -105,12 +105,10 @@ require( './util' );
         // Load carousel items via Ajax, adding any items loaded to the items object when they arrive
         _loadAjaxItems: function(target, url, items) {
             var spinner = this._addSpinner(target),
-                ajax_target = $('<div>'),
                 self = this;
-            ajax_target.load(url, function() {
+            target.load(url, function() {
                 self._removeSpinner(spinner);
-                var ajax_items = ajax_target.find('.item');
-                target.append(ajax_items);
+                var ajax_items = target.find('.item');
                 items = items.add(ajax_items);
                 self._activateItems(items);
                 self.modal_title.html(self._getTitleText());
@@ -157,7 +155,6 @@ require( './util' );
               var button = $(event.relatedTarget), // Button that triggered the modal
                   url = button.data('url'); // If button supplies a URL, use it to load items...
               if (url) {
-                  console.log("Loading from url", url);
                   self._removeItems();
                   self._loadAjaxItems(self.carousel_inner, url, self.items);
               }
