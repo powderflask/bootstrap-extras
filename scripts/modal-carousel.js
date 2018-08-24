@@ -107,7 +107,7 @@ require( './util' );
             var spinner = this._addSpinner(target),
                 self = this;
             target.load(url, function() {
-                self._removeSpinner(spinner);
+                // self._removeSpinner(spinner);  // spinner element is removed when Ajax content is loaded to target!
                 var ajax_items = target.find('.item');
                 items = items.add(ajax_items);
                 self._activateItems(items);
@@ -122,10 +122,9 @@ require( './util' );
             target.append(spinner);
             return spinner;
         },
-        // destroly and remove the given spinner
+        // destroy the given spinner
         _removeSpinner: function(spinner) {
             spinner.spinner('destroy');
-            spinner.remove();
         },
 
         // Get the modal title text, which may be set by option or pulled from active img in carousel
