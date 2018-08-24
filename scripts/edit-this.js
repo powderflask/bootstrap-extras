@@ -31,7 +31,6 @@ require( './util' );
             icon_title: 'Edit this',
 
             // event callbacks (ajax event callbacks also trigger)
-            saveForm: null,   // called when range_input is changed, before saving - return false to prevent default action
             showForm: null,   // called when form is shown
             hideForm: null    // called when form is hidden
         },

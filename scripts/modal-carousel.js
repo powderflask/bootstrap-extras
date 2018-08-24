@@ -44,7 +44,8 @@ require( './util' );
             carouselOptions: {interval: false},  // prevent auto-slide by default
 
             // event callbacks (ajax event callbacks also trigger)
-            loadContent: null   // called just prior to loading content via Ajax - return false to prevent default action
+            loadContent: null,    // called just prior to loading content via Ajax - return false to prevent default action
+            contentLoaded: null   // called after loading content via Ajax - passes in loaded items
         },
 
         // Template node for the widget
@@ -106,13 +107,16 @@ require( './util' );
         _loadAjaxItems: function(target, url, items) {
             var spinner = this._addSpinner(target),
                 self = this;
-            target.load(url, function() {
-                // self._removeSpinner(spinner);  // spinner element is removed when Ajax content is loaded to target!
-                var ajax_items = target.find('.item');
-                items = items.add(ajax_items);
-                self._activateItems(items);
-                self.modal_title.html(self._getTitleText());
-            });
+            if (this._trigger( 'loadContent', target, url)) {
+                target.load(url, function () {
+                    // self._removeSpinner(spinner);  // spinner element is removed when Ajax content is loaded to target!
+                    var ajax_items = target.find('.item');
+                    items = items.add(ajax_items);
+                    self._activateItems(items);
+                    self.modal_title.html(self._getTitleText());
+                    self._trigger('contentLoaded', items);
+                });
+            }
         },
 
         // Create a spinner item in the given target
