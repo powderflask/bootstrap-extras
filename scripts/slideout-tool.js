@@ -51,6 +51,7 @@ require( './util' );
                 button = $.apply(this, markup.button)
                             .append(icon)
                             .append(label);
+            button.label_element = label.find('div');
             button.data('ordinal', this.options.ordinal);  // set the ordinal in the DOM so it's easy to retrieve later
             button.attr('title', this.element.attr('title')); // copy over the button title
             label.spinner({'spin_text' : this.options.spin_text});
@@ -121,6 +122,16 @@ require( './util' );
             // console.log('Destroy:', this);
             this.button.remove();
             this.element.show();
+        },
+
+        // Retreive or set the button label
+        label: function(label_text) {
+            if (label_text){
+                this.button.label_element.html(label_text);
+            }
+            else {
+                return this.button.label_element.html();
+            }
         }
     });
 
