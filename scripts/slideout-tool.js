@@ -100,7 +100,7 @@ require( './util' );
             // If there is no onclick event registered on this.element, apply the native JS click event.
             // see: http://learn.jquery.com/events/triggering-event-handlers/
             // Needed to handle default action of <a> elements
-            if (el.tagName.toLowerCase()==='a' && !el.onclick) {  // don't do this for buttons -- double click will happen (no idea why)
+            if ($(el).is('a') && !el.onclick) {  // don't do this for buttons -- double click will happen (no idea why)
                 el.onclick = el.click;
             }
             this.button.click( function(event) {
