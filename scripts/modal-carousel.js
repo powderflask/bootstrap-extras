@@ -169,7 +169,7 @@ require( './util' );
             // console.log("Create ", widgetName, " instance for", this.element);
             this._ajaxConfig();
             this._getDataOptions();
-            this.element.addClass('modal').attr('role', 'dialog');
+            this.element.addClass('modal fade').attr('role', 'dialog');
             this.element.append(this._template(this.element.attr('id')));
             this._configureEventHandlers();
         },
