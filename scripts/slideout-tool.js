@@ -93,12 +93,16 @@ require( './util' );
 
         // Events handled by this widget
         _configureEventHandlers : function() {
-            var self = this;
+            var self = this,
+                el=this.element[0];
             // If there is no onclick event registered on this.element, apply the native JS click event.
             // see: http://learn.jquery.com/events/triggering-event-handlers/
-            // This should be done for all native JS events, but... uggh.  Needed to handle default action of <a> elements
+            // Needed to handle default action of <a> elements
             if (!this.element[0].onclick) {
                 this.element[0].onclick = this.element[0].click;
+            }
+            if (el.tagName.toLowerCase()==='a' && !el.onclick) {  // don't do this for buttons -- double click will happen (no idea why)
+                el.onclick = el.click;
             }
             this.button.click( function(event) {
                 self._trigger( 'clicked', event ) ? self._triggerNativeEvent(event):null;
