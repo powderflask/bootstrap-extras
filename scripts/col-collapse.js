@@ -42,8 +42,8 @@ require( './util' );
         // Options to be used as defaults
         options: {
             control_title: 'Expand/Collapse Column',
-            controlAll_title: 'Expand/Collapse All',
-            controlAll_labels: {true: 'Expand All', false: 'Collapse All'},  // null or false to leave default
+            control_all_title: 'Expand/Collapse All',
+            control_all_labels: {true: 'Expand All', false: 'Collapse All'},  // null or false to leave default
             icon_class: 'glyphicon glyphicon-resize-full bse-rotate-45',
 
             // event callbacks
@@ -60,7 +60,7 @@ require( './util' );
             col_controls.append(expand_icon.clone())
                         .attr('title', this.options.control_title);
             global_controls.prepend(expand_icon.clone())
-                           .attr('title', this.options.controlAll_title);
+                           .attr('title', this.options.control_all_title);
             collapse(global_controls);  // Assume initial state for global control is Expand All?
             global_controls.data('controls', col_controls);
             return {
@@ -101,9 +101,9 @@ require( './util' );
 
                 // optionally, change control's label
                 toggleCollapsed(control);
-                if (self.options.controlAll_labels) {
+                if (self.options.control_all_labels) {
                     var label = control.find(selectors.controlLabel);
-                    label.html(self.options.controlAll_labels[isCollapsed(control)]);
+                    label.html(self.options.control_all_labels[isCollapsed(control)]);
                 }
 
             });
