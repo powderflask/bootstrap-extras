@@ -18,7 +18,7 @@ require( './jquery-ui-widget-extensions');
 
         // Options to be used as defaults
         options: {
-            initToggle: true,   // false to NOT toggle elements during initialization
+            init_toggle: true,   // false to NOT toggle elements during initialization
 
             // event callbacks (ajax events added during create)
             toggled: null
@@ -32,10 +32,11 @@ require( './jquery-ui-widget-extensions');
         // Initialize widget instance (e.g. element creation, apply theming, bind events etc.)
         _create: function () {
             // console.log('Create ', widgetName, 'instance for', this.element);
+            this._getDataOptions();
             this.control = this.element.find(selectors.control);
             this.target = this.element.find(selectors.target);
             this._configureEventHandlers();
-            if (this.options.initToggle)
+            if (this.options.init_toggle)
                 this.toggle();
          },
 

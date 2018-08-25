@@ -107,14 +107,14 @@ require( './util' );
         _loadAjaxItems: function(target, url, items) {
             var spinner = this._addSpinner(target),
                 self = this;
-            if (this._trigger( 'loadContent', target, url)) {
+            if (this._trigger( 'loadContent', null, {target:target, url:url})) {
                 target.load(url, function () {
                     // self._removeSpinner(spinner);  // spinner element is removed when Ajax content is loaded to target!
                     var ajax_items = target.find('.item');
                     items = items.add(ajax_items);
                     self._activateItems(items);
                     self.modal_title.html(self._getTitleText());
-                    self._trigger('contentLoaded', items);
+                    self._trigger('contentLoaded', null, {items:items});
                 });
             }
         },
