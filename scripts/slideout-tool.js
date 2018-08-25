@@ -52,6 +52,7 @@ require( './util' );
                             .append(icon)
                             .append(label);
             button.data('ordinal', this.options.ordinal);  // set the ordinal in the DOM so it's easy to retrieve later
+            button.attr('title', this.element.attr('title')); // copy over the button title
             label.spinner({'spin_text' : this.options.spin_text});
             this.spinner = label.spinner('instance');
             this.options.hide ? this.element.hide():null;
