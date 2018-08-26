@@ -1,14 +1,24 @@
 
-<div class="bse-edit-this" data-form_id="SeletInstrumentForm">
+<div class="bse-edit-this" data-form_id="SeletInstrumentForm" data-action="#">
     <span class="bse-edit-this-content">marimba</span>
 </div>
 
-<!-- Editing form may be presented anywhere else in the markup, may be hidden -->
-<form id="SeletInstrumentForm" action="#" method="POST">
+<!-- Editing 'form' may be presented anywhere else in the markup, may be hidden -->
+<!-- If it is an actual form element, it can supply the method and action attributes -->
+<div id="SeletInstrumentForm">
     <select name="instrument" class="bse-edit-this-control">
-        <option value="marimba" selected="">marimba</option>
-        <option value="mbira">mbira</option>
-        <option value="ngoma">ngoma</option>
-        <option value="hosho">hosho</option>
+        <option value="xylophone" selected="">marimba</option>
+        <option value="thumbPiano">mbira</option>
+        <option value="drums">ngoma</option>
+        <option value="shakers">hosho</option>
     </select>
+</div>
+
+<div class="bse-edit-this" data-form_id="CaptionForm">
+    <span class="bse-edit-this-content">This is a cat</span>
+</div>
+
+<form id="CaptionForm" method="POST" action="#">
+    <input class="bse-edit-this-control" type="text" value="This is a cat" name="caption">
+    <input type="submit" value="Save" name="submit">
 </form>

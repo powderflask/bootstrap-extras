@@ -54,7 +54,7 @@ require( './util');
         // Submit this.form by ajax, with an optional this.spinner to display while loading
         _ajaxSubmitForm : function(form, settings) {
             var args = Object.create(settings),
-                form_data = form.serialize() || "",
+                form_data = form.find(':input').serialize() || "",  // in case "form" element is not an actual HTML form
                 extra_data = settings.data || "";
             args.data = form_data + extra_data;
             args.method = settings.method || form.attr('method') || 'POST';

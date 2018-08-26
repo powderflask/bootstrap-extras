@@ -31,13 +31,18 @@ require( './util' );
             icon_title: 'Edit this',
 
             // event callbacks (ajax event callbacks also trigger)
+            saveForm: null,   // called when range_input is changed, before saving - return false to prevent default action
             showForm: null,   // called when form is shown
             hideForm: null    // called when form is hidden
         },
 
         // Update the content area from the current form value.
         _updateContent : function() {
-            this.content.html(this.form_control.value);
+            // TODO: getting display value for any input type requires more logic... ** sigh **
+            var value = this.form_control.is('select')?
+                            this.form_control.find('option:selected').text():
+                            this.form_control.val();
+            this.content.html(value);
             this.content.append(this.edit_icon);
         },
 
@@ -57,8 +62,8 @@ require( './util' );
 
             // ... move form to edit-this panel ...
             controls = this.form.find( selectors.control );
-            console.assert(controls.length == 1, "BSE edit_this Error: a single 'control' must be identified in edit form")
-            this.form_control = controls[0];
+            console.assert(controls.length === 1, "BSE edit_this Error: a sing must be supplied\"")
+            this.form_control = $(controls[0]);
             this.element.append(this.form.hide());
         },
 

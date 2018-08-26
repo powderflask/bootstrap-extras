@@ -62,8 +62,8 @@ require( './util' );
         },
 
         _saveForm: function ( event ) {
-            // allow user to augment or override default save logic
-            var go = this._trigger( 'saveForm', event, { form_data: this.form.serialize() });
+            // allow user to augment or override default save logic - 'form' may not be an actual HTML form
+            var go = this._trigger( 'saveForm', event, { form_data: this.form.find(':input').serialize() });
             if ( go && this.options.action ) {
                 this._ajaxSubmitForm(this.form, this.options);
             }
