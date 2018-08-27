@@ -47,18 +47,25 @@ require( './util' );
                 self._deleteIt(event);
             });
 
-            if (!this.options.ajax_success)
-                this.options.ajax_success = function(xhr, json) {
-                    // handle option to show a response on success.
-                    if (self.options.show && json[self.options.show]) {
-                        var el = $(json[self.options.show]);
-                        if (el.is(selectors.it)) // potentially re-apply delete_it to the response element.
-                            el.ajax_delete_it(self.options);
-                        self.element.after(el);
-                        self.element.deleteIt_replacement=el;
-                    }
-                    self.element.hide();
+            // Configure default delete behaviour on success, but respect client's custom success callback.
+            var client_ajax_success = this.options.ajax_success;
+            this.options.ajax_success = function(xhr, json) {
+                // handle option to show a response on success.
+                var new_el = null;
+                if (self.options.show && json[self.options.show]) {
+                    new_el = $(json[self.options.show]);
+                    if (new_el.is(selectors.it)) // potentially re-apply delete_it to the response element.
+                        new_el.ajax_delete_it(self.options);
+                    self.element.after(new_el);
                 }
+                self.element.hide();
+                if (client_ajax_success)
+                    client_ajax_success(xhr, json);
+                self._trigger('deletedIt', null, {
+                    'element': self.element,
+                    'replacement': new_el
+                });
+            };
         },
 
         // Initialize widget instance (e.g. element creation, apply theming, bind events etc.)
