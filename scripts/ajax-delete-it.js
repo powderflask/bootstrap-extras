@@ -48,14 +48,15 @@ require( './util' );
             });
 
             // Configure default delete behaviour on success, but respect client's custom success callback.
-            var client_ajax_success = this.options.ajax_success;
+            var client_ajax_success = this.options.ajax_success,
+                client_options = $.extend(true, {}, this.options);  // clone original options
             this.options.ajax_success = function(xhr, json) {
                 // handle option to show a response on success.
                 var new_el = null;
                 if (self.options.show && json[self.options.show]) {
                     new_el = $(json[self.options.show]);
                     if (new_el.is(selectors.it)) // potentially re-apply delete_it to the response element.
-                        new_el.ajax_delete_it(self.options);
+                        new_el.ajax_delete_it(client_options);
                     self.element.after(new_el);
                 }
                 self.element.hide();
