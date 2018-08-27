@@ -26,7 +26,8 @@ require( './util' );
             show: null,  // JSON key for response data, if that should be shown following delete.
 
             // event callbacks (ajax event callbacks also trigger)
-            deleteIt: null   // called just before delete request is made - return false to prevent default action
+            deleteIt: null,  // called just before delete request is made - return false to prevent default action
+            deletedIt: null  // called after successful delete request has completed.
         },
 
         // Configure the widget control and target
@@ -48,8 +49,14 @@ require( './util' );
 
             if (!this.options.ajax_success)
                 this.options.ajax_success = function(xhr, json) {
-                    if (self.options.show && json[self.options.show])
-                        self.element.after(json[self.options.show]);
+                    // handle option to show a response on success.
+                    if (self.options.show && json[self.options.show]) {
+                        var el = $(json[self.options.show]);
+                        if (el.is(selectors.it)) // potentially re-apply delete_it to the response element.
+                            el.ajax_delete_it(self.options);
+                        self.element.after(el);
+                        self.element.deleteIt_replacement=el;
+                    }
                     self.element.hide();
                 }
         },
@@ -81,6 +88,7 @@ require( './util' );
                 if ( go && this.options.url ) {
                     this._ajaxDelete(this.element, this.options);
                 }
+                this._trigger( 'deletedIt', event, {element:self.element})
             }
         }
     });
