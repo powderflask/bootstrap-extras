@@ -41,7 +41,7 @@ require( './util' );
         _configureEventHandlers : function() {
             var self = this;
 
-            this.element.click( function (event) {
+            this.control.click( function (event) {
                 event.preventDefault();
                 self._deleteIt(event);
             });
