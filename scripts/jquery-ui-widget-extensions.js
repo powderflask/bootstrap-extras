@@ -83,17 +83,17 @@ require( './util');
                     },
                     success: function (json, textStatus, xhr) {
                         if (json.message) target.after(json.message);
-                        self._trigger('ajax_success', null, {args: arguments});
+                        self._trigger('ajax_success', xhr, json);
                     },
                     error: function (xhr, textStatus, errorThrown) {
                         target.after($(ajax_error_template.formatUnicorn({textStatus: textStatus})));
                         console.log(xhr.status + ": " + xhr.responseText);
                         console.log(errorThrown);
-                        self._trigger('ajax_error', null, {args: args, xhr_args: arguments});
+                        self._trigger('ajax_error', xhr, {args: args, textStatus:textStatus});
                     },
                     complete: function (xhr, textStatus) {
                         if (self.spinner) self.spinner.hide();
-                        self._trigger('ajax_complete', null, {args: args, xhr_args: arguments});
+                        self._trigger('ajax_complete', xhr, {args: args, textStatus:textStatus});
                     }
                 };
 

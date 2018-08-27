@@ -6,7 +6,10 @@
             args.beforeSend();
             console.log("call ajax:", args);
             setTimeout(function() {
-                args.success({message : 'Mock AJAX call (success).'});
+                args.success({
+                    message : 'Mock AJAX call (success).',
+                    response: '<span title="Mock Response">AJAX Response</span>'
+                });
             }, 3000);
             setTimeout(function() {
                 args.complete();

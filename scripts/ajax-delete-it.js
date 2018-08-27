@@ -14,7 +14,7 @@ require( './util' );
 
     var widgetName = 'bse.ajax_delete_it',
         widgetClass = 'bse-ajax-delete',
-        selectors = widgetClass.buildNamesMap(['it', 'control', 'target'], '.');
+        selectors = widgetClass.buildNamesMap(['it', 'control'], '.');
 
     $.widget( widgetName, {
 
@@ -23,6 +23,7 @@ require( './util' );
             url: false,      // required option, can be set with data-url attribute on element
             method: 'DELETE',
             confirmation_message: "Confirm delete?  This action can NOT be undone.",  // set to false to disable confirmation
+            show: null,  // JSON key for response data, if that should be shown following delete.
 
             // event callbacks (ajax event callbacks also trigger)
             deleteIt: null   // called just before delete request is made - return false to prevent default action
@@ -34,7 +35,6 @@ require( './util' );
             this.options.url = this.options.url || this.control.attr('href');
             this.control.spinner({ disable_on_spin: true } );
             this.spinner = this.control.spinner('instance');
-            this.target = this.element.find(selectors.target);
         },
 
         // Events handled by this widget
@@ -46,9 +46,12 @@ require( './util' );
                 self._deleteIt(event);
             });
 
-            this.options.ajax_success = function() {
-                self.element.hide();
-            }
+            if (!this.options.ajax_success)
+                this.options.ajax_success = function(xhr, json) {
+                    if (self.options.show && json[self.options.show])
+                        self.element.after(json[self.options.show]);
+                    self.element.hide();
+                }
         },
 
         // Initialize widget instance (e.g. element creation, apply theming, bind events etc.)
