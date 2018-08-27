@@ -66,7 +66,7 @@ require( './util' );
         // Destroy plugin instance  and clean up modifications the widget has made to the DOM
         _destroy: function () {
             // console.log("Destroy: ", this.element);
-            this.element.off('click');
+            this.control.off('click');
         },
 
         _confirmDelete: function ( event ) {
