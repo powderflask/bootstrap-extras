@@ -23,7 +23,6 @@ require( './util' );
             url: false,      // required option, can be set with data-url attribute on element
             method: 'DELETE',
             confirmation_message: "Confirm delete?  This action can NOT be undone.",  // set to false to disable confirmation
-            show: null,  // JSON key for response data, if that should be shown following delete.
 
             // event callbacks (ajax event callbacks also trigger)
             deleteIt: null,  // called just before delete request is made - return false to prevent default action
@@ -47,24 +46,17 @@ require( './util' );
                 self._deleteIt(event);
             });
 
-            // Configure default delete behaviour on success, but respect client's custom success callback.
+            // Configure default success behaviour, but respect client's custom success callback.
             var client_ajax_success = this.options.ajax_success,
                 client_options = $.extend(true, {}, this.options);  // clone original options
             this.options.ajax_success = function(xhr, json) {
-                // handle option to show a response on success.
-                var new_el = null;
-                if (self.options.show && json[self.options.show]) {
-                    new_el = $(json[self.options.show]);
-                    if (new_el.is(selectors.it)) // potentially re-apply delete_it to the response element.
-                        new_el.ajax_delete_it(client_options);
-                    self.element.after(new_el);
-                }
+                // hide the deleted element and signal deletion is complete.
                 self.element.hide();
                 if (client_ajax_success)
                     client_ajax_success(xhr, json);
                 self._trigger('deletedIt', null, {
                     'element': self.element,
-                    'replacement': new_el
+                    'json_response': json
                 });
             };
         },
@@ -96,7 +88,6 @@ require( './util' );
                 if ( go && this.options.url ) {
                     this._ajaxDelete(this.element, this.options);
                 }
-                this._trigger( 'deletedIt', event, {element:self.element})
             }
         }
     });

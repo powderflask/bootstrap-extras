@@ -24,7 +24,8 @@ require( './util' );
             method: 'POST',
 
             // event callbacks (ajax event callbacks also trigger)
-            saveForm: null   // called just before save request made - return false to prevent default action
+            saveForm: null,   // called just before save request made - return false to prevent default action
+            savedIt: null     // called after successful save request has completed.
         },
 
         // Configure the widget controls (edit icon and form elements)
@@ -43,6 +44,18 @@ require( './util' );
                 event.preventDefault();
                 self._saveForm(event);
             });
+
+            // Configure default success behaviour, but respect client's custom success callback.
+            var client_ajax_success = this.options.ajax_success,
+                client_options = $.extend(true, {}, this.options);  // clone original options
+            this.options.ajax_success = function(xhr, json) {
+                if (client_ajax_success)
+                    client_ajax_success(xhr, json);
+                self._trigger('savedIt', null, {
+                    'element': self.element,
+                    'json_response': json
+                });
+            };
         },
 
         // Initialize widget instance (e.g. element creation, apply theming, bind events etc.)
