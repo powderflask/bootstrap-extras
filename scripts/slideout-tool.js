@@ -87,22 +87,21 @@ require( './util' );
             !added ? toolbar.append(button):null;
         },
 
-        // trigger the event on this.element corresponding to a click on the slideout tool
+        // trigger the action on this.element corresponding to a click on the slideout tool
         _triggerNativeEvent: function(event) {
-            this.element.trigger(this.options.action);  // trigger the default element behaviour
+            // can't use trigger to mimic native browser events: http://learn.jquery.com/events/triggering-event-handlers/
+            // instead, use the native click() on the native JS a element.
+            // NOTE: same issue will apply to form submit and other native JS events ** sigh **
+            if (this.element.is('a') && this.options.action === 'click')
+                this.element[0].click();
+            else
+                this.element.trigger(this.options.action);
             this.options.spin ? this.spinner.show():null;
         },
 
         // Events handled by this widget
         _configureEventHandlers : function() {
-            var self = this,
-                el=this.element[0];
-            // If there is no onclick event registered on this.element, apply the native JS click event.
-            // see: http://learn.jquery.com/events/triggering-event-handlers/
-            // Needed to handle default action of <a> elements
-            if ($(el).is('a') && !el.onclick) {  // don't do this for buttons -- double click will happen (no idea why)
-                el.onclick = el.click;
-            }
+            var self = this;
             this.button.click( function(event) {
                 self._trigger( 'clicked', event ) ? self._triggerNativeEvent(event):null;
             });
