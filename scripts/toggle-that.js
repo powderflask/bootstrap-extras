@@ -19,6 +19,7 @@ require( './jquery-ui-widget-extensions');
         // Options to be used as defaults
         options: {
             init_toggle: true,   // false to NOT toggle elements during initialization
+            use_collapse: false, // toggle a bootstrap collapse component
 
             // event callbacks (ajax events added during create)
             toggled: null
@@ -48,7 +49,7 @@ require( './jquery-ui-widget-extensions');
 
         // Public methods
         toggle: function(event) {
-           this.target.toggle();
+           this.options.use_collapse ? this.target.collapse('toggle'):this.target.toggle();
            this._trigger( 'toggled' , event);
         }
     });
