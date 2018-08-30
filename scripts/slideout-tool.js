@@ -33,8 +33,6 @@ require( './util' );
             ordinal: 0,       // any values can be used to control ordering of buttons in toolbar, top-to-bottom
             hide: true,       // hide this.element after moving its functionality to the toolbar
             action: 'click',  // event to trigger on this.element when toolbar button is pressed
-            spin: false,      // replace button text with spinner when action is taken
-            spin_text: 'Loading', // alt text / title for spinner
             container: 'body', // selector for container where the toolbar will be appended
             // event callbacks
             clicked: null     // callback made when this.element clicked, return false to prevent default behaviour
@@ -51,11 +49,10 @@ require( './util' );
                 button = $.apply(this, markup.button)
                             .append(icon)
                             .append(label);
+            button.label = label;
             button.label_element = label.find('div');
             button.data('ordinal', this.options.ordinal);  // set the ordinal in the DOM so it's easy to retrieve later
             button.attr('title', this.element.attr('title')); // copy over the button title
-            label.spinner({'spin_text' : this.options.spin_text});
-            this.spinner = label.spinner('instance');
             this.options.hide ? this.element.hide():null;
             return button;
         },
@@ -87,8 +84,24 @@ require( './util' );
             !added ? toolbar.append(button):null;
         },
 
+        // if the element has a spinner configured, mirror it on the slideout
+        _activate_spinner: function() {
+            var orig_spinner = this.element.spinner('instance'),
+                destination = this.button.label;
+            if (orig_spinner) {
+                destination.spinner(orig_spinner.options);
+                orig_spinner.options.hidden = function (event) {
+                    destination.spinner('hide');
+                };
+                orig_spinner.options.shown = function (event) {
+                    destination.spinner('show');
+                }
+            }
+        },
+
         // trigger the action on this.element corresponding to a click on the slideout tool
         _triggerNativeEvent: function(event) {
+            this._activate_spinner();
             // can't use trigger to mimic native browser events: http://learn.jquery.com/events/triggering-event-handlers/
             // instead, use the native click() on the native JS a element.
             // NOTE: same issue will apply to form submit and other native JS events ** sigh **
@@ -96,7 +109,6 @@ require( './util' );
                 this.element[0].click();
             else
                 this.element.trigger(this.options.action);
-            this.options.spin ? this.spinner.show():null;
         },
 
         // Events handled by this widget
