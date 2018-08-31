@@ -19,7 +19,6 @@ require( './jquery-ui-widget-extensions');
         // Options to be used as defaults
         options: {
             init_toggle: true,   // false to NOT toggle elements during initialization
-            use_collapse: false, // toggle a bootstrap collapse component
 
             // event callbacks (ajax events added during create)
             toggled: null
@@ -47,10 +46,10 @@ require( './jquery-ui-widget-extensions');
             this.control.off('click');
         },
 
-        // Public methods
+        // Toggle the target elements, using Bootstrap collapse if it present otherwise jQuery toggle()
         toggle: function(event) {
-           this.options.use_collapse ? this.target.collapse('toggle'):this.target.toggle();
-           this._trigger( 'toggled' , event);
+            this.target.hasClass('collapse')?this.target.collapse('toggle'):this.target.toggle();
+            this._trigger( 'toggled' , event);
         }
     });
 
