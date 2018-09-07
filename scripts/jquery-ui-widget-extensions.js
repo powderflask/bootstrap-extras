@@ -51,7 +51,7 @@ require( './util');
         },
 
 
-        // Submit this.form by ajax, with an optional this.spinner to display while loading
+        // Make a POST ajax request with the given form's input data
         _ajaxSubmitForm : function(form, settings) {
             var args = Object.create(settings),
                 form_data = form.find(':input').serialize() || "",  // in case "form" element is not an actual HTML form
@@ -64,7 +64,7 @@ require( './util');
             this._ajaxRequest(form, args);
         },
 
-        // Make a DELETE ajax request for this.element, with an optional this.spinner to display while loading
+        // Make a DELETE ajax request for the target element
         _ajaxDelete : function(target, settings) {
             var args = Object.create(settings);
             args.method = settings.method || 'DELETE';
@@ -83,6 +83,7 @@ require( './util');
                     },
                     success: function (json, textStatus, xhr) {
                         if (json.message) target.after(json.message);
+                        if (json.errors) target.after(json.errors);
                         self._trigger('ajax_success', xhr, json);
                     },
                     error: function (xhr, textStatus, errorThrown) {
