@@ -43,13 +43,13 @@ require( './util');
 
         // Events handled by this widget
         _configureEventHandlers : function(scoreCard) {
-            console.log('Configure Event Handlers for:', scoreCard);
+            // console.log('Configure Event Handlers for:', scoreCard);
             scoreCard.change(this.reComputeScore.bind(this));
         },
 
         // Initialize widget instance (e.g. element creation, apply theming, bind events etc.)
         _create: function () {
-            console.log('Create ', widgetName, 'instance for', this.element);
+            // console.log('Create ', widgetName, 'instance for', this.element);
             this._getDataOptions(); // if widget recognizes data-* options in markup
             this.scoreCard = this._getScoreCard(); //
             this._configureEventHandlers(this.scoreCard);
