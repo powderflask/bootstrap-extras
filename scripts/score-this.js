@@ -28,6 +28,8 @@ require( './util');
             score_type: 'sum',  // or 'count'
             score_id : 'item',
             show_total: true,
+            checked_value: 'Yes',
+            na_value: 'Not Applicable'
         },
 
         // Template node for the widget
@@ -58,6 +60,7 @@ require( './util');
 
         // Compute the score from the scoreCard
         reComputeScore: function() {
+            var self=this;
             score = 0;
             total = 0;
             var scoreIt = {
@@ -67,8 +70,8 @@ require( './util');
                 },
                 'count' : function() {
                     // This is SO specific to my use-case - be nice to generalize it a bit...
-                    var checked = (this.value === 'Yes');
-                    var applicable = checked || (this.value === 'No');  // otherwise, not applicable.
+                    var checked = (this.value === self.options.checked_value);
+                    var applicable = (this.value != self.options.na_value);
                     score += checked ? 1 : 0;
                     total += applicable ? 1 : 0;
                 }
