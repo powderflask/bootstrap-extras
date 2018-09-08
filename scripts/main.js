@@ -13,6 +13,7 @@ require('./edit-this');
 require('./move-this');
 require('./modal-carousel');
 require('./progress-report');
+require('./score-this');
 require('./slideout-tool');
 require('./spinner');
 require('./toggle-that');
