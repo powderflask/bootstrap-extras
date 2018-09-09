@@ -35,7 +35,9 @@ require( './jquery-ui-widget-extensions');
 
         // Template node for the widget
         _template : function() {
-            return $.apply(this, markup.spinner).hide().html(this.options.spin_text);
+            return $.apply(this, markup.spinner).hide().
+                     html(this.options.spin_text).
+                     prop('title', this.options.spin_text);
         },
 
         _getDisableTargets : function() {
