@@ -3,8 +3,9 @@
   Press Me!
 </button>
 
-<a href="#" title="The answer is..." class="btn bse-spinner-append"
-   data-spin_text="42..." data-disable_on_spin="true" onclick="$(this).spinner('toggle');">
+<a title="The answer is..." class="btn bse-spinner-append"
+   data-spin_text="42..." data-disable_on_spin="true"
+   onclick="var self=$(this); self.spinner('show'); setTimeout(function(){self.spinner('hide');}, 2000);">
   <span class="glyphicon glyphicon-cloud"></span>
   <span class="sr-only">Answer</span>
 </a>

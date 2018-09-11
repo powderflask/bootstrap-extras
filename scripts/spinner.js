@@ -44,11 +44,13 @@ require( './jquery-ui-widget-extensions');
             if (!this.options.disable_on_spin)
                 return $();
 
-            var form = this.element.closest('form');
-            if (form.length > 0)  // Disable all form inputs if spinner element is in a form
-                return form.find(':input');
-            else                  // or all inputs contained in the spinner element otherwise.
-                return this.element.extend( this.element.find(':input') );
+            // If the spinner element is a form or a submit button on a form...
+            var isForm = this.element.is('form, :submit'),
+                form = this.element.closest('form');
+            if (isForm && form.length > 0)
+                return form.find(':input');   //  ...disable all inputs on the form.
+            // Not a form, so disable the element and any inputs contained within it.
+            return this.element.find(':input').addBack();
         },
 
         // Initialize widget instance (e.g. element creation, apply theming, bind events etc.)
@@ -73,17 +75,27 @@ require( './jquery-ui-widget-extensions');
             this.spinner.css(relative_pos);
         },
 
+        // Disable spinner 'targets' -- form elements and anchors related to the spinner element
+        disable_targets: function(disabled) {
+            disabled = disabled || false;   // default is to disable the targets -- pass true to enable them.
+            // Simply add or remove the disabled class - ain't bootstrap awesome!
+            var op = disabled ? 'addClass' : 'removeClass';
+            this.targets[op]('disabled');
+            // ... and disable/enable any form inputs related to the spinner element
+            this.targets.prop('disabled', disabled);
+
+        },
         // Show, Hide, and Toggle the spinner.
         hide: function(event) {
             this.element.attr('title', this.original_title);
-            this.targets.prop('disabled', false);
+            this.disable_targets(false);
             this.spinner.hide();
             this._trigger( 'hidden' , event);
         },
         show: function(event) {
             this.spinner.show();
             this.element.attr('title', this.options.spin_text);
-            this.targets.prop('disabled', true);
+            this.disable_targets(true);
             this._trigger( 'shown' , event);
         },
         toggle : function(event) {
