@@ -101,7 +101,6 @@ require( './util' );
 
         // trigger the action on this.element corresponding to a click on the slideout tool
         _triggerNativeEvent: function(event) {
-            this._activate_spinner();
             // can't use trigger to mimic native browser events: http://learn.jquery.com/events/triggering-event-handlers/
             // instead, use the native click() on the native JS a element.
             // NOTE: same issue will apply to form submit and other native JS events ** sigh **
@@ -126,6 +125,7 @@ require( './util' );
             this.button = this._template();
             this._addToToolbar(this.button);
             this._configureEventHandlers();
+            this._activate_spinner();
         },
 
         // Destroy plugin instance  and clean up modifications the widget has made to the DOM
