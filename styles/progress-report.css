@@ -50,6 +50,9 @@
 .bse-progress-report-form input[type=range]::-ms-track {
     background-color: transparent;
 }
+.bse-progress-report-form input[type="range"] {
+    background: transparent;
+}
 .bse-progress-report-form .bse-spinner {
     top: -1em;
     left: 45%;

@@ -66,7 +66,8 @@ require( './util');
             var scoreIt = {
                 'sum' : function() {
                     score += Number(this.value) || 0;
-                    total += Number(this.max) || 0;
+                    var applicable = (this.value !== self.options.na_value);
+                    total += applicable ? Number(this.max) || 0 : 0;
                 },
                 'count' : function() {
                     // This is SO specific to my use-case - be nice to generalize it a bit...
