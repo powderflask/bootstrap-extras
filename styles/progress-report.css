@@ -51,7 +51,8 @@
     background-color: transparent;
 }
 .bse-progress-report-form input[type="range"] {
-    background: transparent;
+    background-color: transparent;
+    opacity: 50%;  /* Chrome does not respect slider styling above - at least make it legible */
 }
 .bse-progress-report-form .bse-spinner {
     top: -1em;

@@ -62,7 +62,7 @@ require( './util' );
 
             // ... move form to edit-this panel ...
             controls = this.form.find( selectors.control );
-            console.assert(controls.length === 1, "BSE edit_this Error: a sing must be supplied\"")
+            console.assert(controls.length === 1, "BSE edit_this Error: a single control must be supplied\"")
             this.form_control = $(controls[0]);
             this.element.append(this.form.hide());
         },

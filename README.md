@@ -57,6 +57,7 @@ Future:
 
 BUILD:
 -----
+    > gem install jekyll bundler
     > npm install; cd docs; bundle install;  
     > npm run build-dev;  # build dev dist and docs
     > npm run serve:dev;  # serve docs on dev

@@ -1,6 +1,6 @@
 {
   "name": "bootstrap-extras",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A collection of small, re-usable jQuery plugins to extend Bootstrap's functionality.",
   "author": "Driftwood Cove Designs <powderflask@gmail.com>",
   "license": "MIT",
@@ -32,7 +32,7 @@
     "build-dev": "npm run build-dev:scripts -s && npm run build:styles -s && npm run build:docs -s",
     "build-dev:scripts": "browserify -d scripts/main.js  > dist/bse.min.js",
     "build:styles": "cleancss -o dist/bse.min.css styles/*.css",
-    "build:docs": "cp dist/* docs/assets/ && cp markup/* docs/components/_markup/ && cd docs; jekyll build",
+    "build:docs": "cp dist/* docs/assets/ && cp markup/* docs/components/_markup/ && cd docs; bundle exec jekyll build",
     "open:docs": "opener https://powderflask.github.io/bootstrap-extras/",
     "open:dev": "wait-on http://localhost:4000/bootstrap-extras/ && opener http://localhost:4000/bootstrap-extras/",
     "serve:dev": "cd docs; bundle exec jekyll serve",
