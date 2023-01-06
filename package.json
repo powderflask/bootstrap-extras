@@ -17,8 +17,8 @@
     "wait-on": "^2.1.0"
   },
   "dependencies": {
-    "jquery": "^3.3.1",
-    "bootstrap": "^3.3.7"
+    "jquery": "^3.5.0",
+    "bootstrap": "^3.4.1"
   },
   "repository": {
     "type": "git",
