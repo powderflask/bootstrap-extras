@@ -21,7 +21,6 @@ require( './util' );
         // Options to be used as defaults
         options: {
             action: false,
-            method: 'POST',
 
             // event callbacks (ajax event callbacks also trigger)
             saveForm: null,   // called just before save request made - return false to prevent default action
