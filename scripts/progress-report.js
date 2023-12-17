@@ -29,8 +29,10 @@ require( './util' );
 
         // Options to be used as defaults
         options: {
-            min: 0,
-            max: 100,
+            min: 0,             // absolute min for progress bar (empty value)
+            max: 100,           // absolute max for progress bar (right-hand value)
+            lower_bound: 0,     // smallest valid progress value (min <= lower_bound <= upper_bound)
+            upper_bound: 100,   // largest valid progress value (lower_bound <= upper_bound <= max)
             action: false,
             method: 'POST',
 
@@ -61,7 +63,9 @@ require( './util' );
                 spinner = self.form.spinner('instance');  // ouch - tight coupling to ajax-save here.
 
             this.range_input.on('input', function(event) {
-                self.value = self.range_input.val() || 0;
+                // constrain value between lower and upper bound
+                self.value = Math.max(self.range_input.val() || self.options.min, self.options.lower_bound);
+                self.value = Math.min(self.value, self.options.upper_bound);
                 self.progress_bar.text(self.value + '% Complete');
                 self.progress_bar.css( 'width', self.value+'%');
                 spinner.position( {top: '-1em', left:(self.value-1)+'%'} );
