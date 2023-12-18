@@ -66,6 +66,7 @@ require( './util' );
                 // constrain value between lower and upper bound
                 self.value = Math.max(self.range_input.val() || self.options.min, self.options.lower_bound);
                 self.value = Math.min(self.value, self.options.upper_bound);
+                self.range_input.val(self.value);
                 self.progress_bar.text(self.value + '% Complete');
                 self.progress_bar.css( 'width', self.value+'%');
                 spinner.position( {top: '-1em', left:(self.value-1)+'%'} );
